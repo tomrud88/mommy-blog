@@ -2,6 +2,7 @@ import Navbar from '@/navbar/Navbar';
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Footer from '@/footer/Footer';
+import TopSection from '@/topSection/TopSection';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
         <div className="container">
           {children}
           <Navbar />
+          <TopSection />
           <div className="wrapper">heello</div>
           <Footer />
         </div>
