@@ -1,0 +1,21 @@
+.container{
+    width:100%;
+   
+}
+.posts{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:28px;
+}
+
+@media screen and (max-width: 1200px) {
+    .posts{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .posts{
+        grid-template-columns: 1fr;
+    }
+}
