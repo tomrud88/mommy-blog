@@ -2,9 +2,7 @@
     display: flex;
     flex-direction: column;
     width:100%;
-    height: 500px;
-   
-    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 1px 1px 10px 0px rgb(173, 173, 173);
 }
 .imageContainer{
     width: 100%;
@@ -16,7 +14,18 @@
 }
 .title{
     margin-top:10px;
+    font-size: 18px;
 }
 .text{
-    margin-top:10px;
+    font-size: 17px;
+    font-weight: 300;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.readMore{
+    display: block;
+    margin-top: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid black;
+    width: max-content;
 }

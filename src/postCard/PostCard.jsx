@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import styles from './postCard.module.css'
+import Link from 'next/link';
 
 const PostCard = () => {
   return (
@@ -23,6 +24,7 @@ const PostCard = () => {
             wyoubrazni u dzieci moze wydawac sie wyzwaniem. Jednak to wlasnie
             dzieki wyobrazni maluchy...
           </p>
+          <Link href="/" className={styles.readMore}>Read More</Link>
         </div>
       </div>
     </div>

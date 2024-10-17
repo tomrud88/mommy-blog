@@ -18,7 +18,7 @@ const TopSection = () => {
           alt="mom width child"
           className={styles.mainImg}
           width={1400}
-          height={900}
+          height={700}
           layout="responsive"
         ></Image>
       </div>

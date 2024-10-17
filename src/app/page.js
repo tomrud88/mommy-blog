@@ -6,6 +6,7 @@ import PostList from '@/postList/PostList'
 export default function Home() {
   return (
     <div>
+      <div className={styles.blueDot}></div>
       <PostList />
     </div>
   )

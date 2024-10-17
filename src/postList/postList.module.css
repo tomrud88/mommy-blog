@@ -1,11 +1,12 @@
 .container{
+    margin-top:50px;
     width:100%;
-   
+    position: relative;
 }
 .posts{
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    gap:28px;
+    gap:38px;
 }
 
 @media screen and (max-width: 1200px) {
