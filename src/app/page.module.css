@@ -1,11 +1,29 @@
 .main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  display: flex; 
 }
+.content{
+  display: flex;
+  gap:50px;
+  max-width: 1566px;
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:80px;
+  padding-right:80px;
+  position:relative;
+}
+@media screen and (max-width:1280px){
+  .content{
+    max-width:1024px;
+  }
+}
+@media screen and (max-width:1024px){
+  .content{
+    max-width: 768px;
+    padding-left:40px;
+    padding-right: 40px;
+  }
+}
+
 
 .blueDot{
   width: 100px;

@@ -26,26 +26,9 @@ a{
 }
 
 .wrapper{
-  max-width: 1366px;
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:80px;
-  padding-right:80px;
-  position:relative;
+  display: flex;
+  flex-direction: column;
 }
-@media screen and (max-width:1280px){
-  .wrapper{
-    max-width:1024px;
-  }
-}
-@media screen and (max-width:1024px){
-  .wrapper{
-    max-width: 768px;
-    padding-left:40px;
-    padding-right: 40px;
-  }
-}
-
 
 
 

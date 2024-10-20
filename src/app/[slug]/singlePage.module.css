@@ -1,0 +1,46 @@
+.container{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.textContainer{
+    margin-bottom: 50px;
+}
+.title{
+    font-size: 38px;
+}
+.infoContainer{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.imageContainer{
+    height: 600px;
+    width: 1200px;
+    position: relative
+}
+.image{
+    object-fit: cover;
+}
+
+.content{
+    display: flex;
+    width: 1200px;
+    align-items: flex-start;
+    justify-content: center;
+    gap:30px;
+}
+
+.post{
+    width: 800px;
+    margin-top: 50px;
+}
+.description p{
+    font-size: 24px;
+    font-weight: 300;
+    margin-top:10px;
+    margin-bottom: 20px;
+}
