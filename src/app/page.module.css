@@ -4,7 +4,7 @@
 .content{
   display: flex;
   gap:50px;
-  max-width: 1566px;
+  max-width: 1466px;
   margin-left:auto;
   margin-right:auto;
   padding-left:80px;
@@ -13,12 +13,12 @@
 }
 @media screen and (max-width:1280px){
   .content{
-    max-width:1024px;
+    max-width:1164px;
   }
 }
 @media screen and (max-width:1024px){
   .content{
-    max-width: 768px;
+    max-width: 868px;
     padding-left:40px;
     padding-right: 40px;
   }
@@ -35,7 +35,7 @@
   border-radius: 50%;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1580px) {
     .blueDot{
       display: none;
     }

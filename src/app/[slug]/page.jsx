@@ -1,6 +1,7 @@
 import Image from "next/image"
 import styles from "./singlePage.module.css"
 import Menu from "@/components/menu/Menu";
+import Comments from "@/components/menu/comments/Comments";
 
 const SinglePage = () => {
   return (
@@ -20,7 +21,7 @@ const SinglePage = () => {
           />
         </div>
       </div>
-      <div className={styles.content}>
+      <div className={styles.contentSingle}>
         <div className={styles.post}>
           <div className={styles.description}>
             <p>
@@ -90,8 +91,9 @@ const SinglePage = () => {
               tygodniu.
             </p>
           </div>
+          <Comments />
         </div>
-        <Menu />
+          <Menu />
       </div>
     </div>
   );

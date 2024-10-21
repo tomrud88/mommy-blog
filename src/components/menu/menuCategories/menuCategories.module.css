@@ -1,0 +1,26 @@
+.categoryList{
+    margin-top:40px;
+    margin-bottom: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    gap:20px;
+}
+.categoryItem{
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 16px;
+    color:white;
+    width: max-content;
+}
+.categoryItem.mommy{
+    background-color: rgb(65, 65, 245);
+}
+.categoryItem.child{
+    background-color: rgb(223, 115, 196);
+}
+.categoryItem.play{
+    background-color: rgb(245, 161, 65);
+}
+.categoryItem.books{
+    background-color: rgb(67, 185, 13);
+}

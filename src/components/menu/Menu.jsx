@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import styles from './menu.module.css'
+import MenuCategories from './menuCategories/MenuCategories'
 
 const Menu = () => {
   return (
@@ -61,6 +62,8 @@ const Menu = () => {
           </div>
         </Link>
       </div>
+      <h1 className={styles.title}>Kategorie</h1>
+      <MenuCategories/>
       <h2 style={{ fontSize: "28px" }}>Autor poleca</h2>
       <div className={styles.items}>
         <Link href="/" className={styles.item}>

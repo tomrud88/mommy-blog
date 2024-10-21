@@ -1,21 +1,15 @@
 .container{
     margin-top:50px;
-    flex:5;
+    flex:6;
     position: relative;
 }
 .posts{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(2,1fr);
     gap:38px;
 }
 
-@media screen and (max-width: 1200px) {
-    .posts{
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
     .posts{
         grid-template-columns: 1fr;
     }

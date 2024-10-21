@@ -19,23 +19,24 @@
 }
 .imageContainer{
     height: 600px;
-    width: 1200px;
+    max-height: 600px;
+    width: 100%;
     position: relative
 }
 .image{
     object-fit: cover;
 }
 
-.content{
+.contentSingle{
     display: flex;
-    width: 1200px;
+    max-width: 1200px;
     align-items: flex-start;
     justify-content: center;
     gap:30px;
 }
 
 .post{
-    width: 800px;
+    flex: 5;
     margin-top: 50px;
 }
 .description p{
@@ -43,4 +44,75 @@
     font-weight: 300;
     margin-top:10px;
     margin-bottom: 20px;
+}
+
+@media screen and (max-width:1024px) {
+    .container{
+        margin-top:30px;
+    }
+    .textContainer{
+    margin-bottom: 30px;
+    padding:0px 20px;
+}
+    .title{
+    font-size: 34px;
+}
+.post{
+    margin-top: 30px;
+}
+    .contentSingle{
+    display: flex;
+    max-width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+.infoContainer{
+    width: 80%;
+}
+.imageContainer{
+    height: 400px;
+    width: 96%;
+    position: relative;
+}
+.post{
+    flex:1
+}
+
+}
+
+@media screen and (max-width:700px) {
+    .container{
+        margin-top:20px;
+    }
+    .textContainer{
+    margin-bottom: 20px;
+    padding:0px 20px;
+}
+    .title{
+    font-size: 28px;
+}
+.post{
+    margin-top: 20px;
+}
+    .contentSingle{
+    display: flex;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding:0px 20px 
+}
+.infoContainer{
+    width: 100%;
+}
+.imageContainer{
+    height: 300px;
+    width: 100%;
+    position: relative;
+}
+.description p{
+    font-size: 18px;
+}
+.description h2{
+    font-size: 22px;
+}
 }
