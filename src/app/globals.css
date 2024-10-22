@@ -30,6 +30,13 @@ a{
   flex-direction: column;
 }
 
+.ql-container{
+  font-size: 28px !important;
+
+}
+.quill > .ql-container > .ql-editor.ql-blank::before{
+color: black
+}
 
 
 
