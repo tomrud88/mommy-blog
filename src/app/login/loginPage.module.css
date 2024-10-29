@@ -1,0 +1,75 @@
+.container{
+    display: flex;
+}
+.picture{
+    width: 50%;
+    height: 800px;
+    background-color: greenyellow;
+    position:relative;
+}
+.wrapper{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.googleButton{
+    margin:10px;
+    padding: 10px 20px;
+    color:white;
+    background-color: rgb(44, 105, 219);
+    border:none;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.inputGroup{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    width: 500px;
+}
+.inputGroup label{
+    margin-bottom: 5px;
+}
+.input{
+  padding:10px;
+}
+.loginButton{
+    padding:10px 20px;
+    margin-top: 20px;
+    color:white;
+    background-color: rgb(44, 105, 219);
+    border:none;
+}
+
+@media screen and (max-width:1054px){
+    .container{
+        flex-direction: column;
+    }
+    .picture{
+    width: 100%;
+    height: 500px;
+    }
+    .wrapper{
+    margin-top:30px;
+    width: 100%;
+    }
+}
+
+@media screen and (max-width:554px){
+    .container{
+        flex-direction: column;
+    }
+    .picture{
+    width: 100%;
+    height: 400px;
+    }
+    .inputGroup{
+        width: 300px;
+    }
+}
