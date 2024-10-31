@@ -1,0 +1,44 @@
+.container{
+ max-width: 1300px;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+.title{
+    margin:30px 0px;
+}
+
+.categories{
+    display: flex;
+    justify-content: space-between;
+    gap:10px;
+}
+.category{
+    display: flex;
+    align-items: center;
+    gap:10px;
+    text-transform: capitalize;
+    width: 20%;
+    height: 80px;
+    border-radius: 10px;
+    justify-content: center;
+}
+.image{
+    border-radius: 50%;
+}
+
+.category.mommy{
+    background-color: rgb(65, 65, 245);
+}
+.category.child{
+    background-color: rgb(223, 115, 196);
+}
+.category.play{
+    background-color: rgb(245, 161, 65);
+}
+.category.books{
+    background-color: rgb(67, 185, 13);
+}
