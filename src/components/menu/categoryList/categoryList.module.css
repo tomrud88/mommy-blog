@@ -15,6 +15,7 @@
     display: flex;
     justify-content: space-between;
     gap:10px;
+    
 }
 .category{
     display: flex;
@@ -25,6 +26,7 @@
     height: 80px;
     border-radius: 10px;
     justify-content: center;
+    
 }
 .image{
     border-radius: 50%;
@@ -41,4 +43,17 @@
 }
 .category.books{
     background-color: rgb(67, 185, 13);
+}
+
+@media screen and (max-width:700px){
+    .title{
+        font-size: 22px;
+    }
+    .categories{
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .category{
+        width: 80%;
+    }
 }
