@@ -32,16 +32,16 @@
     border-radius: 50%;
 }
 
-.category.mommy{
+.category.mama{
     background-color: rgb(65, 65, 245);
 }
-.category.child{
+.category.dziecko{
     background-color: rgb(223, 115, 196);
 }
-.category.play{
+.category.zabawy{
     background-color: rgb(245, 161, 65);
 }
-.category.books{
+.category.książki{
     background-color: rgb(67, 185, 13);
 }
 

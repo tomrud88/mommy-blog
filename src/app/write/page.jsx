@@ -4,8 +4,12 @@ import styles from "./writePage.module.css";
 import Image from "next/image";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
+import { useSession } from "next-auth/react";
 
 const WritePage = () => {
+
+  const { data, status } = useSession();
+
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
 
