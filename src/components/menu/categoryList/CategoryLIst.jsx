@@ -29,7 +29,7 @@ const CategoryLIst = async () => {
           >
             {item.img && (
               <Image
-                src="/sunsetMom.jpg"
+                src={item.img}
                 alt=""
                 width={46}
                 height={46}

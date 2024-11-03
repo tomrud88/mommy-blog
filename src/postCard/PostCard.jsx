@@ -3,12 +3,12 @@ import React from 'react'
 import styles from './postCard.module.css'
 import Link from 'next/link';
 
-const PostCard = () => {
+const PostCard = ({item,key}) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} key={key}>
       <div className={styles.imageContainer}>
         <Image
-          src="/children-block-game.jpg"
+          src={item.img}
           alt="children playing with blocks"
           layout="fill"
           objectFit="cover"
@@ -16,13 +16,11 @@ const PostCard = () => {
       </div>
       <div className={styles.textContainer}>
         <div className={styles.title}>
-          <h3>Kreatywne zabawy z dziecmi: Jak rozwijac wyobraznie malucha?</h3>
+          <h3>{item.title}</h3>
         </div>
         <div className={styles.text}>
           <p>
-            W dzisiejszym zdominowanym przez technologie swiecie, rozwijanie
-            wyoubrazni u dzieci moze wydawac sie wyzwaniem. Jednak to wlasnie
-            dzieki wyobrazni maluchy...
+           {item.desc}
           </p>
           <Link href="/" className={styles.readMore}>Read More</Link>
         </div>
