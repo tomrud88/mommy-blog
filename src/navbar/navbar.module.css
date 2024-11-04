@@ -5,7 +5,9 @@
     background-color: white;
 }
 .logo{
-    flex:1
+    flex:1;
+    margin-top:10px;
+    margin-left: 10px;
 }
 .title{
     font-size: 30px;

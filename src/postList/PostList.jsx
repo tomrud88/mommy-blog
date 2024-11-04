@@ -18,18 +18,23 @@ const getData = async (page) => {
 
 const PostList = async ({page}) => {
 
-  const data = await getData(page);
+  const { posts, count } = await getData(page);
+  
+  const POST_PER_PAGE = 4;
+
+  const hasPrev = POST_PER_PAGE * (page - 1) > 0
+  const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
 
   return (
     <div className={styles.container}>
       <h2 className={styles.heading}>Najnowsze</h2>
       <div className={styles.posts}>
-        {data?.map((item) => (
+        {posts?.map((item) => (
           <PostCard key={item._id} item={item} />
         ))}
        
       </div>
-      <Pagination />
+      <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
     </div>
   );
 }

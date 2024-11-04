@@ -11,3 +11,8 @@
     background-color: rgb(243, 143, 12);
     color:white;
 }
+
+.button:disabled{
+    cursor:not-allowed;
+    background-color: rgba(243, 143, 12, 0.466);
+}
