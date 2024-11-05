@@ -15,14 +15,16 @@ const PostCard = ({item,key}) => {
         />
       </div>
       <div className={styles.textContainer}>
-        <div className={styles.title}>
-          <h3>{item.title}</h3>
-        </div>
+        <Link href={`posts/${item.slug}`}>
+          <div className={styles.title}>
+            <h3>{item.title}</h3>
+          </div>
+        </Link>
         <div className={styles.text}>
-          <p>
-           {item.desc}
-          </p>
-          <Link href="/" className={styles.readMore}>Read More</Link>
+          <p>{item.desc}</p>
+          <Link href="/" className={styles.readMore}>
+            Read More
+          </Link>
         </div>
       </div>
     </div>

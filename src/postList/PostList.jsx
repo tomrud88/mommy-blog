@@ -3,8 +3,8 @@ import styles from "./postList.module.css";
 import Pagination from '@/pagination/Pagination';
 import PostCard from '@/postCard/PostCard';
 
-const getData = async (page) => {
-  const res = await fetch(`http://localhost:3000/api/posts?page=${page}`, {
+const getData = async ( page, cat ) => {
+  const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}`, {
     cache: "no-store",
   });
 
@@ -16,9 +16,9 @@ const getData = async (page) => {
 };
 
 
-const PostList = async ({page}) => {
+const PostList = async ({page,cat}) => {
 
-  const { posts, count } = await getData(page);
+  const { posts, count } = await getData(page,cat);
   
   const POST_PER_PAGE = 4;
 
