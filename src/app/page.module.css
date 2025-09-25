@@ -1,42 +1,42 @@
 .main {
-  display: flex; 
-}
-.content{
   display: flex;
-  gap:50px;
+}
+.content {
+  display: flex;
+  gap: 50px;
   max-width: 1466px;
-  margin-left:auto;
-  margin-right:auto;
-  padding-left:80px;
-  padding-right:80px;
-  position:relative;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 80px;
+  padding-right: 80px;
+  position: relative;
 }
-@media screen and (max-width:1280px){
-  .content{
-    max-width:1164px;
+@media screen and (max-width: 1280px) {
+  .content {
+    max-width: 1164px;
   }
 }
-@media screen and (max-width:1024px){
-  .content{
+@media screen and (max-width: 1024px) {
+  .content {
     max-width: 868px;
-    padding-left:40px;
+    padding-left: 40px;
     padding-right: 40px;
+    flex-direction: column; /* Stack on smaller screens */
   }
 }
 
-
-.blueDot{
+.blueDot {
   width: 100px;
   height: 100px;
   position: absolute;
-  top:200px;
-  right:-50px;
+  top: 200px;
+  right: -50px;
   background-color: blue;
   border-radius: 50%;
 }
 
 @media screen and (max-width: 1580px) {
-    .blueDot{
-      display: none;
-    }
+  .blueDot {
+    display: none;
+  }
 }

@@ -1,77 +1,64 @@
+"use client";
+import React from "react";
+import styles from "./loginPage.module.css";
+import Image from "next/image";
+// import { auth, signIn, signOut } from '@/utils/auth';
+import { useSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-import React from 'react'
-import styles from "./loginPage.module.css"
-import Image from 'next/image';
-import { auth,signIn, signOut } from '@/utils/auth';
+const LoginPage = () => {
+  const { status } = useSession();
 
+  const router = useRouter();
 
-export default async function LoginPage(){
+  if (status === "loading") {
+    return <div className={styles.loading}>Loading...</div>;
+  }
 
-  const session = await auth();
-  console.log('session:', session);
-  const user = session?.user
+  if (status === "authenticated") {
+    router.push("/");
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.picture}>
-        <Image src="/door.jpg" layout="fill" objectFit="cover" alt="door" />
+        <Image src="/door.jpg" fill style={{ objectFit: "cover" }} alt="door" />
       </div>
-      {user ? (
-        <>
-          <div className={styles.wrapper}>
-            <h2>Witaj {user.name}</h2>
-            <form
-              action={async () => {
-                "use server";
-                await signOut("google");
-              }}
-            >
-              <button className={styles.googleButton} type="submit">
-                wyloguj
-              </button>
-            </form>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className={styles.wrapper}>
-            <h2>Witaj Ponownie</h2>
-            <form
-              action={async () => {
-                "use server";
-                await signIn("google", { redirectTo: "/" });
-              }}
-            >
-              <button className={styles.googleButton} type="submit">
-                Zaloguj z Google
-              </button>
-            </form>
-            <p>lub przez email</p>
-            <form action="" className={styles.form}>
-              <div className={styles.inputGroup}>
-                <label htmlFor="email">Adres email</label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  for="email"
-                  placeholder="adres email"
-                />
-              </div>
-              <div className={styles.inputGroup}>
-                <label htmlFor="password">Hasło</label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  for="password"
-                  placeholder="Hasło"
-                />
-              </div>
-
-              <button className={styles.loginButton}>Zaloguj</button>
-            </form>
-          </div>
-        </>
-      )}
+      <div className={styles.wrapper}>
+        <form
+          className={styles.form}
+          onSubmit={async (e) => {
+            e.preventDefault();
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+            await signIn("credentials", {
+              username,
+              password,
+              callbackUrl: "/",
+            });
+          }}
+        >
+          <input
+            name="username"
+            type="text"
+            placeholder="Wpisz nazwę użytkownika"
+            className={styles.input}
+            required
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Wpisz hasło"
+            className={styles.input}
+            required
+          />
+          <button type="submit" className={styles.button}>
+            Zaloguj się
+          </button>
+        </form>
+      </div>
     </div>
   );
-}
+};
+
+export default LoginPage;

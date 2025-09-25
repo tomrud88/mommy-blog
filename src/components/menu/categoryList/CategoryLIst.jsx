@@ -1,29 +1,35 @@
-import React from 'react'
-import styles from './categoryList.module.css'
-import Link from 'next/link'
-import Image from 'next/image'
+import React from "react";
+import styles from "./categoryList.module.css";
+import Link from "next/link";
+import Image from "next/image";
 
 const getData = async () => {
-  const res = await fetch("http://localhost:3000/api/categories", {
-    cache:"no-store",
-  })
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error("Failed");
   }
 
   return res.json();
-}
+};
 
 const CategoryLIst = async () => {
   const data = await getData();
+
+  if (!Array.isArray(data)) {
+    console.error("Expected an array but got:", data);
+    return <p>Failed to load categories</p>;
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Kategorie</h1>
       <div className={styles.categories}>
-        {data?.map((item) => (
+        {data.map((item) => (
           <Link
-          href="/blog?cat=style"
+            href="/blog?cat=style"
             className={`${styles.category} ${styles[item.slug]}`}
             key={item._id}
           >
@@ -36,12 +42,12 @@ const CategoryLIst = async () => {
                 className={styles.image}
               />
             )}
-          {item.title}
-        </Link>
-      ))}
+            {item.title}
+          </Link>
+        ))}
       </div>
     </div>
   );
-}
+};
 
-export default CategoryLIst
+export default CategoryLIst;

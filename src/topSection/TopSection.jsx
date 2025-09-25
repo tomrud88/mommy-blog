@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import React from 'react';
+import Image from "next/image";
+import React from "react";
 import styles from "./topSection.module.css";
 
 const TopSection = () => {
@@ -19,11 +19,11 @@ const TopSection = () => {
           className={styles.mainImg}
           width={1400}
           height={700}
-          layout="responsive"
+          style={{ width: "auto", height: "auto" }}
         ></Image>
       </div>
     </div>
   );
-}
+};
 
-export default TopSection
+export default TopSection;
