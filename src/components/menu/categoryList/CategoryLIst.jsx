@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const getData = async () => {
   const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
-    cache: "no-store",
+    next: { revalidate: 3600 },
   });
 
   if (!res.ok) {
@@ -29,9 +29,9 @@ const CategoryLIst = async () => {
       <div className={styles.categories}>
         {data.map((item) => (
           <Link
-            href="/blog?cat=style"
+            href={`/?cat=${item.slug}`}
             className={`${styles.category} ${styles[item.slug]}`}
-            key={item._id}
+            key={item.id}
           >
             {item.img && (
               <Image

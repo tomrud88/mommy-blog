@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./writePage.module.css";
 import Image from "next/image";
 
@@ -18,6 +18,22 @@ const WritePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [title, setTitle] = useState("");
   const [imgUrl, setImgUrl] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [selectedCat, setSelectedCat] = useState("");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await fetch("/api/categories");
+      if (res.ok) {
+        const data = await res.json();
+        setCategories(data);
+        if (data.length > 0) {
+          setSelectedCat(data[0].slug); // default to first category
+        }
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const handlePublish = async () => {
     if (!title || !value) {
@@ -47,6 +63,7 @@ const WritePage = () => {
         title,
         desc: value,
         img: finalImgUrl,
+        catSlug: selectedCat,
       }),
     });
     if (res.ok) {
@@ -80,6 +97,17 @@ const WritePage = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <select
+        className={styles.select}
+        value={selectedCat}
+        onChange={(e) => setSelectedCat(e.target.value)}
+      >
+        {categories.map((cat) => (
+          <option key={cat.id} value={cat.slug}>
+            {cat.title}
+          </option>
+        ))}
+      </select>
 
       <div className={styles.editor}>
         <button className={styles.button} onClick={() => setOpen(!open)}>

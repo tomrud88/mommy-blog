@@ -1,6 +1,31 @@
 .main {
   display: flex;
 }
+.categoryHeader {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.categoryHeader.mama {
+  background-color: rgb(65, 65, 245);
+}
+.categoryHeader.dziecko {
+  background-color: rgb(223, 115, 196);
+}
+.categoryHeader.zabawy {
+  background-color: rgb(245, 161, 65);
+}
+.categoryHeader.książki {
+  background-color: rgb(67, 185, 13);
+}
+.categoryTitle {
+  margin: 0;
+}
 .content {
   display: flex;
   gap: 50px;

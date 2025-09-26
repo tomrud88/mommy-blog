@@ -1,11 +1,10 @@
-'use client'
-import React, { useState } from 'react'
-import styles from './comments.module.css'
-import Link from 'next/link';
-import Image from 'next/image';
-import useSWR from 'swr';
-import { useSession } from 'next-auth/react';
-
+"use client";
+import React, { useState } from "react";
+import styles from "./comments.module.css";
+import Link from "next/link";
+import Image from "next/image";
+import useSWR from "swr";
+import { useSession } from "next-auth/react";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -18,26 +17,25 @@ const fetcher = async (url) => {
   }
 
   return data;
-}
+};
 
 const Comments = ({ postSlug }) => {
-  const {status} = useSession();
-  
-  const { data, mutate, isLoading, isError } = useSWR(`http://localhost:3000/api/comments?postSlug=${postSlug}`,
+  const { status } = useSession();
+
+  const { data, mutate, isLoading, isError } = useSWR(
+    `/api/comments?postSlug=${postSlug}`,
     fetcher
-  )
+  );
 
   const [desc, setDesc] = useState("");
 
-   const handleSubmit = async () => {
-     await fetch("/api/comments", {
-       method: "POST",
-       body: JSON.stringify({ desc, postSlug }),
-     });
-     mutate();
-  }
-
-   
+  const handleSubmit = async () => {
+    await fetch("/api/comments", {
+      method: "POST",
+      body: JSON.stringify({ desc, postSlug }),
+    });
+    mutate();
+  };
 
   return (
     <div className={styles.container}>
@@ -82,6 +80,6 @@ const Comments = ({ postSlug }) => {
       </div>
     </div>
   );
-}
+};
 
-export default Comments
+export default Comments;

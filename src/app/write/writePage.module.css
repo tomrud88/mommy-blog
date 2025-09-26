@@ -1,58 +1,67 @@
-.container{
-
+.container {
 }
 
-.editor{
-    display: flex;
-    gap:30px;
-    height: 700px;
-    position: relative;
+.editor {
+  display: flex;
+  gap: 30px;
+  height: 700px;
+  position: relative;
 }
-.button,.addButton{
-    width:46px;
-    height: 46px;
-    border-radius: 50%;
-    background-color: orange;
-    border: 1px solid var(--textColor);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+.button,
+.addButton {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: orange;
+  border: 1px solid var(--textColor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
-.addButton{
-    background-color: rgb(182, 64, 129);
+.addButton {
+  background-color: rgb(182, 64, 129);
 }
-.add{
-    display: flex;
-    gap:20px;
-    background-color: var(--bg);
-    position:absolute;
-    z-index: 999;
-    width: 100%;
-    left:70px;
+.add {
+  display: flex;
+  gap: 20px;
+  background-color: var(--bg);
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  left: 70px;
 }
-.input{
-    padding:50px;
-    font-size: 64px;
-    border:none;
-    outline: none;
-    background-color: transparent;
+.input {
+  padding: 50px;
+  font-size: 64px;
+  border: none;
+  outline: none;
+  background-color: transparent;
 }
-.input::placeholder{
-    color:grey;
+.input::placeholder {
+  color: grey;
 }
-.textArea{
-    width: 100%;
+.select {
+  padding: 20px;
+  font-size: 24px;
+  border: 1px solid var(--textColor);
+  background-color: var(--bg);
+  color: var(--textColor);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.textArea {
+  width: 100%;
 }
 
-.publish{
-    position: absolute;
-    top:120px;
-    right: 20px;
-    padding:10px 20px;
-    border:none;
-    background-color: green;
-    color:white;
-    cursor:pointer;
-    border-radius: 20px;
+.publish {
+  position: absolute;
+  top: 120px;
+  right: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  border-radius: 20px;
 }

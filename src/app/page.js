@@ -1,13 +1,39 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-import PostList from '@/postList/PostList'
-import TopSection from '@/topSection/TopSection';
-import Menu from '@/components/menu/Menu';
-import CategoryLIst from '@/components/menu/categoryList/CategoryLIst';
+import Image from "next/image";
+import styles from "./page.module.css";
+import PostList from "@/postList/PostList";
+import TopSection from "@/topSection/TopSection";
+import Menu from "@/components/menu/Menu";
+import CategoryLIst from "@/components/menu/categoryList/CategoryLIst";
 
+const getCategory = async (cat) => {
+  if (!cat) return null;
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
+    next: { revalidate: 3600 },
+  });
+  if (!res.ok) return null;
+  const categories = await res.json();
+  return categories.find((c) => c.slug === cat);
+};
 
-export default function Home({ searchParams }) {
+export default async function Home({ searchParams }) {
   const page = parseInt(searchParams.page) || 1;
+  const cat = searchParams.cat;
+  const category = await getCategory(cat);
+
+  if (category) {
+    return (
+      <div>
+        <div className={`${styles.categoryHeader} ${styles[category.slug]}`}>
+          <h1 className={styles.categoryTitle}>{category.title}</h1>
+        </div>
+        <div className={styles.content}>
+          <div className={styles.blueDot}></div>
+          <PostList page={page} cat={cat} />
+          <Menu />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -15,7 +41,7 @@ export default function Home({ searchParams }) {
       <CategoryLIst />
       <div className={styles.content}>
         <div className={styles.blueDot}></div>
-        <PostList page={page} />
+        <PostList page={page} cat={cat} />
         <Menu />
       </div>
     </div>

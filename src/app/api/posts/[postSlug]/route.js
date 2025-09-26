@@ -1,14 +1,13 @@
 import { prisma } from "@/utils/connect";
 import { NextResponse } from "next/server";
 
-export const GET = async (req, {params}) => {
-  
-    const { slug } = params;
+export const GET = async (req, { params }) => {
+  const { postSlug } = params;
 
   try {
-      const post = await prisma.post.findUnique({
-          where: { slug:slug },
-      });
+    const post = await prisma.post.findUnique({
+      where: { slug: postSlug },
+    });
 
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {

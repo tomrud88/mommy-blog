@@ -1,11 +1,33 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import styles from "./postCard.module.css";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const PostCard = ({ item, key }) => {
+const PostCard = ({ item }) => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    if (!confirm("Czy na pewno chcesz usunąć ten post?")) return;
+    const res = await fetch("/api/posts", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: item.id, slug: item.slug }),
+    });
+    if (res.ok) {
+      alert("Post usunięty!");
+    } else {
+      const error = await res.json().catch(() => null);
+      alert(error?.message || "Błąd podczas usuwania.");
+    }
+    router.refresh();
+  };
+
   return (
-    <div className={styles.container} key={key}>
+    <div className={styles.container}>
       <div className={styles.imageContainer}>
         <Image
           src={item.img}
@@ -25,6 +47,11 @@ const PostCard = ({ item, key }) => {
             Read More
           </Link>
         </div>
+        {session && (
+          <button onClick={handleDelete} className={styles.deleteButton}>
+            Usuń
+          </button>
+        )}
       </div>
     </div>
   );

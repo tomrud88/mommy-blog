@@ -7,7 +7,10 @@ const getData = async (page, cat) => {
   const res = await fetch(
     `${process.env.NEXTAUTH_URL}/api/posts?page=${page}&cat=${cat || ""}`,
     {
-      cache: "no-store",
+      next: {
+        revalidate: 60,
+        tags: ["posts", cat ? `posts-${cat}` : "posts-all"],
+      },
     }
   );
 
@@ -28,13 +31,12 @@ const PostList = async ({ page, cat }) => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.heading}>Najnowsze</h2>
       <div className={styles.posts}>
         {posts?.map((item) => (
-          <PostCard key={item._id} item={item} />
+          <PostCard key={item.id} item={item} />
         ))}
       </div>
-      <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} />
+      <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} cat={cat} />
     </div>
   );
 };
