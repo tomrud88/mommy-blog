@@ -10,6 +10,9 @@ import { useRouter } from "next/navigation";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
 
+// Import Quill for custom configuration
+const Quill = dynamic(() => import("quill"), { ssr: false });
+
 const WritePage = () => {
   const { data, status } = useSession();
   const router = useRouter();
@@ -35,11 +38,37 @@ const WritePage = () => {
     fetchCategories();
   }, []);
 
+  // Configure Quill for proper list handling
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const configureQuill = async () => {
+        const QuillModule = (await import("quill")).default;
+
+        // Custom list handler to ensure proper numbering
+        const List = QuillModule.import("formats/list");
+        class CustomList extends List {
+          static create(value) {
+            const node = super.create(value);
+            if (value === "ordered") {
+              node.setAttribute("data-list", "ordered");
+            }
+            return node;
+          }
+        }
+
+        QuillModule.register(CustomList, true);
+      };
+
+      configureQuill();
+    }
+  }, []);
+
   const handlePublish = async () => {
     if (!title || !value) {
       alert("Uzupełnij tytuł i treść artykułu.");
       return;
     }
+
     let finalImgUrl = imgUrl; // Use the provided URL
     if (selectedImage && !imgUrl) {
       const formData = new FormData();
@@ -61,7 +90,7 @@ const WritePage = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         title,
-        desc: value,
+        desc: value, // Zwykłe value bez transformacji
         img: finalImgUrl,
         catSlug: selectedCat,
       }),
@@ -78,15 +107,51 @@ const WritePage = () => {
     }
   };
 
+  // NAPRAWKA: Custom handler dla numerowanych list
+  const handleListClick = () => {
+    // Dodaj prostą numerowaną listę jako HTML
+    const currentValue = value;
+    const newList = `
+<ol>
+<li>Pierwszy punkt</li>
+<li>Drugi punkt</li>
+<li>Trzeci punkt</li>
+</ol>
+    `;
+    setValue(currentValue + newList);
+  };
+
+  // NAPRAWKA: Problem React Quill z numeracją - lepsze modules
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
       ["bold", "italic", "underline", "strike"],
       [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }],
       ["link"],
       ["clean"],
     ],
+    clipboard: {
+      // Naprawka dla list
+      matchVisual: false,
+    },
   };
+
+  const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+  ];
 
   return (
     <div className={styles.container}>
@@ -139,6 +204,13 @@ const WritePage = () => {
             <button className={styles.addButton}>
               <Image src="/videoAdd.png" alt="" width={20} height={20} />
             </button>
+            <button
+              className={styles.addButton}
+              onClick={handleListClick}
+              title="Dodaj listę numerowaną"
+            >
+              📝
+            </button>
           </div>
         )}
         {selectedImage && (
@@ -159,7 +231,54 @@ const WritePage = () => {
           onChange={setValue}
           placeholder="Napisz nowy artykuł"
           modules={modules}
+          formats={formats}
         />
+        <style jsx global>{`
+          /* ZASADY FORMATOWANIA - NOWE POSTY */
+          .ql-editor ol {
+            counter-reset: item !important;
+            padding-left: 1.5em !important;
+            margin: 8px 0 12px 0 !important;
+          }
+
+          .ql-editor ol li {
+            list-style: none !important;
+            counter-increment: item !important;
+            position: relative !important;
+            display: block !important;
+            margin-bottom: 6px !important;
+            line-height: 1.6 !important;
+          }
+
+          .ql-editor ol li::before {
+            content: counter(item) ". " !important;
+            position: absolute !important;
+            left: -1.5em !important;
+            top: 0 !important;
+            font-weight: bold !important;
+            color: inherit !important;
+            width: 18px !important;
+          }
+
+          .ql-editor ol li[data-list] {
+            list-style: none !important;
+          }
+
+          .ql-editor ol li[data-list="ordered"] {
+            list-style: none !important;
+          }
+
+          /* Lepsze odstępy w edytorze */
+          .ql-editor h1,
+          .ql-editor h2,
+          .ql-editor h3 {
+            margin-bottom: 8px !important;
+          }
+
+          .ql-editor p {
+            margin-bottom: 8px !important;
+          }
+        `}</style>
       </div>
       <button className={styles.publish} onClick={handlePublish}>
         Opublikuj

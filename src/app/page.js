@@ -7,7 +7,8 @@ import CategoryLIst from "@/components/menu/categoryList/CategoryLIst";
 
 const getCategory = async (cat) => {
   if (!cat) return null;
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
+  const { getApiUrl } = await import("@/utils/getBaseUrl");
+  const res = await fetch(getApiUrl("/categories"), {
     next: { revalidate: 3600 },
   });
   if (!res.ok) return null;

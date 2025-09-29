@@ -1,48 +1,61 @@
-:root{
-  --bg:white;
-  --textColor:black;
+:root {
+  --bg: white;
+  --textColor: black;
   --softBg: #f0f0f0;
-  --softTextColor:#626262;
+  --softTextColor: #626262;
 }
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-body{
+body {
   max-width: 100vw;
   overflow-x: hidden;
-  font-family:Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
-a{
-  color:inherit;
+a {
+  color: inherit;
   text-decoration: none;
 }
-.container{
+.container {
   min-height: 100vh;
   background-color: var(--bg);
-  color:var(--textColor);
+  color: var(--textColor);
 }
 
-.wrapper{
+.wrapper {
   display: flex;
   flex-direction: column;
 }
 
-.ql-container{
+.ql-container {
   font-size: 28px !important;
-
 }
-.quill > .ql-container > .ql-editor.ql-blank::before{
-color: black
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  color: black;
 }
 
+/* Style dla obrazków w treści postów */
+.ql-editor img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 20px auto !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-
-
-
-
+/* Style dla obrazków w opisie postów na stronie pojedynczego posta */
+.description img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 20px auto !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
 /* :root {
   --max-width: 1100px;
@@ -151,3 +164,97 @@ a {
     color-scheme: dark;
   }
 } */
+
+/* ZASADY DLA TWORZENIA NOWYCH POSTÓW - React Quill Editor */
+.ql-editor ol {
+  counter-reset: item !important;
+  padding-left: 1.5em !important; /* Zmniejszone z 2em */
+  margin: 10px 0 !important; /* Kontrolowane odstępy */
+}
+
+.ql-editor ol li {
+  list-style: none !important;
+  counter-increment: item !important;
+  position: relative !important;
+  display: block !important;
+  margin-bottom: 8px !important; /* Mniejsze odstępy między punktami */
+  line-height: 1.6 !important;
+}
+
+.ql-editor ol li::before {
+  content: counter(item) ". " !important;
+  position: absolute !important;
+  left: -1.5em !important; /* Zmniejszone z -2em */
+  top: 0 !important;
+  font-weight: bold !important;
+  color: inherit !important;
+  width: 20px !important; /* Stała szerokość dla wyrównania */
+}
+
+.ql-editor ol li[data-list] {
+  list-style: none !important;
+}
+
+.ql-editor ol li[data-list="ordered"] {
+  list-style: none !important;
+}
+
+/* ZASADY: Lepsze odstępy między nagłówkami a listami w edytorze */
+.ql-editor h1 + ol,
+.ql-editor h2 + ol,
+.ql-editor h3 + ol {
+  margin-top: 8px !important;
+}
+
+/* ZASADY: Kontrolowane odstępy po listach */
+.ql-editor ol + p,
+.ql-editor ol + h1,
+.ql-editor ol + h2,
+.ql-editor ol + h3 {
+  margin-top: 15px !important;
+}
+
+/* Ensure Quill toolbar ordered list button works */
+.ql-toolbar .ql-list[value="ordered"] {
+  background-color: transparent;
+}
+
+.ql-toolbar .ql-list[value="ordered"]:hover {
+  background-color: #e0e0e0;
+}
+
+/* GLOBALNE UKRYCIE WSZYSTKICH JEDYNEK */
+ol li::marker {
+  content: none !important;
+  display: none !important;
+}
+
+li[data-list="ordered"]::marker {
+  content: none !important;
+  display: none !important;
+}
+
+li[data-list="ordered"] {
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+/* Bardzo agresywne ukrycie marker */
+::marker {
+  content: none !important;
+  display: none !important;
+}
+
+/* Specjalnie dla Quill content */
+.ql-editor ol li::marker,
+.description ol li::marker {
+  content: none !important;
+  display: none !important;
+}
+
+/* GLOBALNE WYMUSZENIE BRAKU NUMERACJI */
+ol,
+ol li {
+  list-style: none !important;
+  list-style-type: none !important;
+}

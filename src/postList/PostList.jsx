@@ -2,23 +2,32 @@ import React from "react";
 import styles from "./postList.module.css";
 import Pagination from "@/pagination/Pagination";
 import PostCard from "@/postCard/PostCard";
+import { getApiUrl } from "@/utils/getBaseUrl";
 
 const getData = async (page, cat) => {
-  const res = await fetch(
-    `${process.env.NEXTAUTH_URL}/api/posts?page=${page}&cat=${cat || ""}`,
-    {
+  try {
+    const apiUrl = getApiUrl(`/posts?page=${page}&cat=${cat || ""}`);
+    console.log("Fetching from:", apiUrl); // Debug log
+
+    const res = await fetch(apiUrl, {
       next: {
         revalidate: 60,
         tags: ["posts", cat ? `posts-${cat}` : "posts-all"],
       },
+    });
+
+    if (!res.ok) {
+      console.error("API Error:", res.status, res.statusText);
+      // Return empty data instead of throwing
+      return { posts: [], count: 0 };
     }
-  );
 
-  if (!res.ok) {
-    throw new Error("Failed");
+    return res.json();
+  } catch (error) {
+    console.error("getData error:", error);
+    // Return empty data on error
+    return { posts: [], count: 0 };
   }
-
-  return res.json();
 };
 
 const PostList = async ({ page, cat }) => {

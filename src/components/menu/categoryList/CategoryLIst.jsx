@@ -2,9 +2,10 @@ import React from "react";
 import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import { getApiUrl } from "@/utils/getBaseUrl";
 
 const getData = async () => {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
+  const res = await fetch(getApiUrl("/categories"), {
     next: { revalidate: 3600 },
   });
 

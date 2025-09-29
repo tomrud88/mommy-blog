@@ -2,9 +2,10 @@ import Image from "next/image";
 import styles from "./singlePage.module.css";
 import Menu from "@/components/menu/Menu";
 import Comments from "@/components/menu/comments/Comments";
+import { getApiUrl } from "@/utils/getBaseUrl";
 
 const getData = async (slug) => {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${slug}`, {
+  const res = await fetch(getApiUrl(`/posts/${slug}`), {
     next: {
       revalidate: 60,
       tags: ["posts", `post-${slug}`],
@@ -15,7 +16,9 @@ const getData = async (slug) => {
     throw new Error("Failed");
   }
 
-  return res.json();
+  const data = await res.json();
+
+  return data;
 };
 
 const SinglePage = async ({ params }) => {

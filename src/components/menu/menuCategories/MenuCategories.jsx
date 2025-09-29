@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./menuCategories.module.css";
+import { getApiUrl } from "@/utils/getBaseUrl";
 
 const slugColorMap = {
   mama: "rgb(65, 65, 245)",
@@ -9,7 +10,7 @@ const slugColorMap = {
 };
 
 const MenuCategories = async () => {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`, {
+  const res = await fetch(getApiUrl("/categories"), {
     next: { revalidate: 3600 },
   });
 

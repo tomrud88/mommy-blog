@@ -44,7 +44,7 @@ const PostCard = ({ item }) => {
         </Link>
         <div className={styles.text}>
           <Link href={`posts/${item.slug}`} className={styles.readMore}>
-            Read More
+            Czytaj więcej
           </Link>
         </div>
         {session && (

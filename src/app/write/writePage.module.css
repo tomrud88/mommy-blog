@@ -1,4 +1,5 @@
 .container {
+  padding: 20px;
 }
 
 .editor {
@@ -52,6 +53,63 @@
 }
 .textArea {
   width: 100%;
+}
+
+/* Fix image width in editor */
+.textArea :global(.ql-editor img) {
+  max-width: 80% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 10px auto !important;
+}
+
+/* Quill editor specific styles to fix numbering issues */
+.textArea :global(.ql-editor ol) {
+  counter-reset: item !important;
+  padding-left: 2em !important;
+  margin-left: 0 !important;
+}
+
+.textArea :global(.ql-editor ol li) {
+  list-style-type: none !important;
+  counter-increment: item !important;
+  position: relative !important;
+  display: block !important;
+}
+
+.textArea :global(.ql-editor ol li::before) {
+  content: counter(item) ". " !important;
+  position: absolute !important;
+  left: -2em !important;
+  top: 0 !important;
+  white-space: nowrap !important;
+  font-weight: bold !important;
+  color: inherit !important;
+}
+
+/* Reset any existing Quill styles that interfere */
+.textArea :global(.ql-editor ol li[data-list]) {
+  list-style-type: none !important;
+}
+
+.textArea :global(.ql-editor ol li[data-list="ordered"]) {
+  list-style-type: none !important;
+}
+
+/* Ensure proper spacing */
+.textArea :global(.ql-editor ol li) {
+  margin-bottom: 0.5em !important;
+  padding-left: 0 !important;
+}
+
+/* Nested lists */
+.textArea :global(.ql-editor ol li ol) {
+  counter-reset: item !important;
+  padding-left: 2em !important;
+}
+
+.textArea :global(.ql-editor ol li ol li::before) {
+  content: counter(item, lower-alpha) ". " !important;
 }
 
 .publish {

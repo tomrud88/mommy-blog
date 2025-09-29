@@ -13,7 +13,7 @@ const Navbar = () => {
       <div className={styles.title}>Mama z Wyobraźnią</div>
       <div className={styles.links}>
         <Link href="/"  className={styles.link}>Strona Główna</Link>
-        <Link href="/"  className={styles.link}>O mnie</Link>
+        <Link href="/about"  className={styles.link}>O mnie</Link>
         <Link href="/"  className={styles.link}>Dziennik Mamy</Link>
         <AuthLinks/>
       </div>
