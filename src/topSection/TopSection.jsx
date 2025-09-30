@@ -14,7 +14,7 @@ const TopSection = () => {
       </div>
       <div className={styles.imgContainer}>
         <Image
-          src="/front.jpg"
+          src="/front.webp"
           alt="mom width child"
           className={styles.mainImg}
           width={1400}

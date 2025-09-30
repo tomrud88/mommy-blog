@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./singlePage.module.css";
 import Menu from "@/components/menu/Menu";
 import Comments from "@/components/menu/comments/Comments";
+import ViewTracker from "@/components/ViewTracker";
 import { getApiUrl } from "@/utils/getBaseUrl";
 
 const getData = async (slug) => {
@@ -28,6 +29,7 @@ const SinglePage = async ({ params }) => {
 
   return (
     <div className={styles.container}>
+      <ViewTracker postSlug={slug} />
       <div className={styles.infoContainer}>
         <div className={styles.textContainer}>
           <h1 className={styles.title}>{data?.title}</h1>

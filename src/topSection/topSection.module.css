@@ -75,10 +75,14 @@
   .mainImg {
     width: 900px;
     height: 600px;
+    margin-left: -100px;
   }
 }
 
 @media screen and (max-width: 700px) {
+  .container {
+    justify-content: flex-start;
+  }
   .titleSquare {
     left: 0px;
     top: 240px;
@@ -89,11 +93,14 @@
   .titleSquare h1 {
     font-size: 20px;
   }
+  .imgContainer {
+    justify-content: flex-start;
+  }
   .mainImg {
     width: 700px;
     height: 500px;
     display: block;
-    margin: 0 auto;
+    margin: 0 0 0 -100px;
     position: relative;
   }
 }

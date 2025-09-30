@@ -18,14 +18,14 @@ const Pagination = ({ page, hasPrev, hasNext, cat }) => {
       <button
         className={styles.button}
         disabled={!hasPrev}
-        onClick={() => router.push(createQuery(page - 1))}
+        onClick={() => router.push(createQuery(page - 1), { scroll: false })}
       >
         Wstecz
       </button>
       <button
         className={styles.button}
         disabled={!hasNext}
-        onClick={() => router.push(createQuery(page + 1))}
+        onClick={() => router.push(createQuery(page + 1), { scroll: false })}
       >
         {" "}
         Do przodu

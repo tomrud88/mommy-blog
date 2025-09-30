@@ -1,64 +1,64 @@
-.container{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: white;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafafa;
 }
-.logo{
-    flex:1;
-    margin-top:10px;
-    margin-left: 10px;
+.logo {
+  flex: 1;
+  margin-top: 10px;
+  margin-left: 10px;
 }
-.title{
-    font-size: 30px;
-    font-weight: bold;
-    flex:1;
-    text-align: center;
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  flex: 1;
+  text-align: center;
 }
-.links{
-    display: flex;
-    font-size: 18px;
-    font-weight: bold;
-    gap:20px;
-    flex:1;
-    justify-content: center;
+.links {
+  display: flex;
+  font-size: 16px;
+  font-weight: bold;
+  gap: 30px;
+  flex: 1;
+  justify-content: center;
 }
 
-@media screen and (max-width:1280px){
-    .title{
-        text-align: left;
-        font-size:26px;
-    }
-    .links{
-        font-size:14px;
-        gap:15px;
-    }
+@media screen and (max-width: 1280px) {
+  .title {
+    text-align: left;
+    font-size: 26px;
+  }
+  .links {
+    font-size: 14px;
+    gap: 25px;
+  }
 }
-@media screen and (max-width:768px){
-    .logo{
-        flex:1;
-    }
-    .title{
-        text-align: center;
-        font-size:22px;
-        flex:3;
-    }
-    .links{
-        font-size:12px;
-        gap:10px;
-        flex:1;
-        justify-content: center;
-    }
-    .link{
-        display: none;
-    }
+@media screen and (max-width: 768px) {
+  .logo {
+    flex: 1;
+  }
+  .title {
+    text-align: center;
+    font-size: 22px;
+    flex: 3;
+  }
+  .links {
+    font-size: 12px;
+    gap: 10px;
+    flex: 1;
+    justify-content: center;
+  }
+  .links > .link {
+    display: none;
+  }
 }
-@media screen and (max-width:640px){
-    .title{
-        text-align: center;
-        font-size:20px;
-    }
-    .link{
-        display: none;
-    }
+@media screen and (max-width: 640px) {
+  .title {
+    text-align: center;
+    font-size: 20px;
+  }
+  .links > .link {
+    display: none;
+  }
 }

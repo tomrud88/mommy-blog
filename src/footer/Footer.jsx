@@ -1,17 +1,23 @@
-import React from 'react'
+import React from "react";
 import styles from "./footer.module.css";
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
     <div className={styles.container}>
       <div className={styles.insideContainer}>
         <div className={styles.info}>
-          <div className={styles.logo}>
-            <Image src="/logoN.png" alt="logo" width={50} height={50} className={styles.imgLogo} />
+          <Link href="/" className={styles.logo}>
+            <Image
+              src="/logoN.png"
+              alt="logo"
+              width={50}
+              height={50}
+              className={styles.imgLogo}
+            />
             <h1 className={styles.logoText}>Mama z Wyobraźnią</h1>
-          </div>
+          </Link>
           <p className={styles.desc}>
             Mama z Wyobraźnią to strona internetowa stworzona z myślą o mamach,
             które szukają inspiracji i praktycznych porad na co dzień.
@@ -38,17 +44,16 @@ const Footer = () => {
         <div className={styles.links}>
           <div className={styles.list}>
             <span className={styles.listTitle}>Menu</span>
-            <Link href="/home">Strona Główna</Link>
+            <Link href="/">Strona Główna</Link>
             <Link href="/about">O mnie</Link>
-            <Link href="/mom">Dziennik Mamy</Link>
             <Link href="/contact">Kontakt</Link>
           </div>
           <div className={styles.list}>
             <span className={styles.listTitle}>Kategorie</span>
-            <Link href="/">Mama</Link>
-            <Link href="/">Zabawy</Link>
-            <Link href="/">Ksiazki</Link>
-            <Link href="/">Gry</Link>
+            <Link href="/?cat=mama">Mama</Link>
+            <Link href="/?cat=zabawy">Zabawy</Link>
+            <Link href="/?cat=książki">Książki</Link>
+            <Link href="/?cat=dziecko">Dziecko</Link>
           </div>
           <div className={styles.list}>
             <span className={styles.listTitle}>Social</span>
@@ -60,6 +65,6 @@ const Footer = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Footer
+export default Footer;

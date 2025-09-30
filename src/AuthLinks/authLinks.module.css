@@ -1,47 +1,66 @@
-.link{
-    cursor: pointer;
+.link {
+  cursor: pointer;
+  margin-left: 15px;
 }
-.loginLink{
-    padding-right: 10px;
-}
-
-.burger{
-    width:20px;
-    height: 16px;
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.line{
-    width:100%;
-    height: 2px;
-    background-color: var(--textColor);
+.loginLink {
+  padding-right: 10px;
 }
 
-.responsiveMenu{
-    position: absolute;
-    top:90px;
-    left:0;
-    background-color: var(--bg);
-    height: calc(100vh - 100px);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap:50px;
-    font-size: 30px;
-    z-index: 100;
+.burger {
+  width: 20px;
+  height: 16px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.line {
+  width: 100%;
+  height: 2px;
+  background-color: var(--textColor);
+}
+
+.responsiveMenu {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  background-color: var(--bg);
+  height: calc(100vh - 100px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  font-size: 30px;
+  z-index: 100;
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--textColor);
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.closeButton:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 @media screen and (max-width: 768px) {
-    .burger{
-        display: flex;
-    }
-    .link{
-        display:none;
-    }
-    .sidelink{
-        cursor:pointer;
-    }
+  .burger {
+    display: flex;
+  }
+  .link {
+    display: none;
+  }
+  .sidelink {
+    cursor: pointer;
+  }
 }
