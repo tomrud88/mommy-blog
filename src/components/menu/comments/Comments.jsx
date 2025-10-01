@@ -55,30 +55,40 @@ const Comments = ({ postSlug }) => {
         <Link href="/login">Zaloguj się żeby dodać opinie</Link>
       )}
       <div className={styles.comments}>
-        {isLoading
-          ? "loading"
-          : data?.map((item) => (
-              <div className={styles.comment} key={item._id}>
-                <div className={styles.user}>
-                  {item?.user?.img && (
-                    <Image
-                      src={item.user.img}
-                      alt=""
-                      width={50}
-                      height={50}
-                      className={styles.image}
-                    />
-                  )}
-                  <div className={styles.userInfo}>
-                    <span className={styles.username}>{item.user.name}</span>
-                    <span className={styles.date}>
-                      {new Date(item.createdAt).toLocaleDateString("pl-PL")}
-                    </span>
-                  </div>
+        {isLoading ? (
+          <div className={styles.loading}>
+            <div className={styles.loadingText}>Ładowanie komentarzy...</div>
+          </div>
+        ) : isError ? (
+          <div className={styles.error}>Błąd podczas ładowania komentarzy</div>
+        ) : data?.length === 0 ? (
+          <div className={styles.noComments}>
+            Brak komentarzy. Bądź pierwszy!
+          </div>
+        ) : (
+          data?.map((item) => (
+            <div className={styles.comment} key={item._id}>
+              <div className={styles.user}>
+                {item?.user?.img && (
+                  <Image
+                    src={item.user.img}
+                    alt=""
+                    width={50}
+                    height={50}
+                    className={styles.image}
+                  />
+                )}
+                <div className={styles.userInfo}>
+                  <span className={styles.username}>{item.user.name}</span>
+                  <span className={styles.date}>
+                    {new Date(item.createdAt).toLocaleDateString("pl-PL")}
+                  </span>
                 </div>
-                <p className={styles.desc}>{item.desc}</p>
               </div>
-            ))}
+              <p className={styles.desc}>{item.desc}</p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

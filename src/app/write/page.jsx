@@ -23,6 +23,8 @@ const WritePage = () => {
   const [imgUrl, setImgUrl] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCat, setSelectedCat] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -82,11 +84,37 @@ const WritePage = () => {
     }
   }, []);
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!title.trim()) {
+      newErrors.title = "Tytuł jest wymagany";
+    }
+
+    if (!value.trim() || value.trim() === "<p><br></p>") {
+      newErrors.content = "Treść artykułu jest wymagana";
+    }
+
+    if (!selectedImage && !imgUrl) {
+      newErrors.image = "Zdjęcie jest wymagane dla każdego artykułu";
+    }
+
+    if (!selectedCat) {
+      newErrors.category = "Kategoria jest wymagana";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handlePublish = async () => {
-    if (!title || !value) {
-      alert("Uzupełnij tytuł i treść artykułu.");
+    // Walidacja formularza
+    if (!validateForm()) {
       return;
     }
+
+    setIsSubmitting(true);
+    setErrors({});
 
     let finalImgUrl = imgUrl; // Use the provided URL
     if (selectedImage && !imgUrl) {
@@ -120,10 +148,14 @@ const WritePage = () => {
       setValue("");
       setSelectedImage(null);
       setImgUrl("");
+      setErrors({});
       router.push("/");
     } else {
-      alert("Wystąpił błąd podczas publikacji.");
+      const errorData = await res.json().catch(() => ({}));
+      alert(errorData.message || "Wystąpił błąd podczas publikacji.");
     }
+
+    setIsSubmitting(false);
   };
 
   // NAPRAWKA: Problem React Quill z numeracją - lepsze modules
@@ -160,19 +192,36 @@ const WritePage = () => {
 
   return (
     <div className={styles.container}>
-      <input
-        type="text"
-        placeholder="Tytuł artykułu"
-        className={styles.input}
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+      <div className={styles.inputGroup}>
+        <input
+          type="text"
+          placeholder="Tytuł artykułu *"
+          className={`${styles.input} ${errors.title ? styles.inputError : ""}`}
+          value={title}
+          onChange={(e) => {
+            setTitle(e.target.value);
+            if (errors.title) {
+              setErrors((prev) => ({ ...prev, title: "" }));
+            }
+          }}
+        />
+        {errors.title && (
+          <div className={styles.errorMessage}>{errors.title}</div>
+        )}
+      </div>
       <div className={styles.categoryContainer}>
-        <label className={styles.categoryLabel}>Kategoria:</label>
+        <label className={styles.categoryLabel}>Kategoria: *</label>
         <select
-          className={styles.select}
+          className={`${styles.select} ${
+            errors.category ? styles.inputError : ""
+          }`}
           value={selectedCat}
-          onChange={(e) => setSelectedCat(e.target.value)}
+          onChange={(e) => {
+            setSelectedCat(e.target.value);
+            if (errors.category) {
+              setErrors((prev) => ({ ...prev, category: "" }));
+            }
+          }}
         >
           {categories.map((cat) => (
             <option key={cat.id} value={cat.slug}>
@@ -180,15 +229,27 @@ const WritePage = () => {
             </option>
           ))}
         </select>
+        {errors.category && (
+          <div className={styles.errorMessage}>{errors.category}</div>
+        )}
       </div>
 
       <div className={styles.editor}>
         <div className={styles.editorSidebar}>
           <div className={styles.editorControls}>
             <div className="add-menu-container">
-              <button className={styles.button} onClick={() => setOpen(!open)}>
+              <button
+                className={`${styles.button} ${
+                  errors.image ? styles.buttonError : ""
+                }`}
+                onClick={() => setOpen(!open)}
+                title="Dodaj zdjęcie (wymagane)"
+              >
                 <Image src="/plus.png" alt="" width={16} height={16} />
               </button>
+              {errors.image && (
+                <div className={styles.errorMessage}>{errors.image}</div>
+              )}
               {open && (
                 <div className={styles.add}>
                   <label className={styles.addButton}>
@@ -241,14 +302,24 @@ const WritePage = () => {
 
         <div className={styles.editorContent}>
           <ReactQuill
-            className={styles.textArea}
+            className={`${styles.textArea} ${
+              errors.content ? styles.inputError : ""
+            }`}
             theme="snow"
             value={value}
-            onChange={setValue}
-            placeholder="Napisz nowy artykuł"
+            onChange={(newValue) => {
+              setValue(newValue);
+              if (errors.content) {
+                setErrors((prev) => ({ ...prev, content: "" }));
+              }
+            }}
+            placeholder="Napisz nowy artykuł *"
             modules={modules}
             formats={formats}
           />
+          {errors.content && (
+            <div className={styles.errorMessage}>{errors.content}</div>
+          )}
         </div>
         <style jsx global>{`
           /* Lepsze odstępy w edytorze */
@@ -263,9 +334,17 @@ const WritePage = () => {
           }
         `}</style>
       </div>
-      <button className={styles.publish} onClick={handlePublish}>
-        Opublikuj
+      <button
+        className={`${styles.publish} ${
+          isSubmitting ? styles.publishLoading : ""
+        }`}
+        onClick={handlePublish}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Publikowanie..." : "Opublikuj *"}
       </button>
+
+      <div className={styles.requiredNote}>* - pola wymagane</div>
     </div>
   );
 };

@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://mommy-blog.vercel.app/sitemap.xml
+
+# Disallow admin areas
+Disallow: /api/
+Disallow: /write
+Disallow: /login
+Disallow: /register
+
+# Allow important pages
+Allow: /
+Allow: /about
+Allow: /posts/
+Allow: /category/

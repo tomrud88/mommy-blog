@@ -276,3 +276,43 @@
   cursor: pointer;
   border-radius: 20px;
 }
+
+.publishLoading {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.publishLoading:hover {
+  background-color: #666;
+}
+
+/* Validation styles */
+.inputGroup {
+  margin-bottom: 15px;
+}
+
+.inputError {
+  border: 2px solid #ff4444 !important;
+  background-color: #fff5f5 !important;
+}
+
+.buttonError {
+  border: 2px solid #ff4444 !important;
+  background-color: #fff5f5 !important;
+}
+
+.errorMessage {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.requiredNote {
+  position: absolute;
+  top: 160px;
+  right: 20px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}

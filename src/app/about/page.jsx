@@ -9,9 +9,14 @@ const AboutPage = () => {
         <div className={styles.imageContainer}>
           <Image
             src="/mother-embracing-her-daughter.webp"
-            alt="Mama przytulająca córkę"
+            alt="Mama przytulająca córkę - ciepła więź rodzicielska"
             fill
             className={styles.image}
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 400px"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+            quality={85}
           />
         </div>
         <div className={styles.textContainer}>

@@ -14,23 +14,17 @@ export const getBaseUrl = () => {
     return window.location.origin;
   }
 
-  // Server-side: use the NEXTAUTH_URL or fallback to common ports
+  // Server-side: for development, we need to use the same port the server is running on
+  // Check if we're in Next.js development and try to get the actual port
+  const port = process.env.PORT || process.env.NEXT_SERVER_PORT || "3000";
+
+  // If NEXTAUTH_URL is set, use it (it should be updated by the dev server)
   if (process.env.NEXTAUTH_URL) {
     return process.env.NEXTAUTH_URL;
   }
 
-  // Fallback: try to determine from common development ports
-  const availablePorts = process.env.AVAILABLE_PORTS?.split(",") || [
-    "3000",
-    "3001",
-    "3002",
-    "3003",
-    "3004",
-  ];
-
-  // For server-side rendering, we'll use the first available port as fallback
-  // In practice, NEXTAUTH_URL should be set correctly by the server startup
-  return `http://localhost:${availablePorts[0]}`;
+  // Fallback: use localhost with the port
+  return `http://localhost:${port}`;
 };
 
 /**

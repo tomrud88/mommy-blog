@@ -1,14 +1,17 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./postCard.module.css";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { IMAGE_SIZES, IMAGE_QUALITY } from "../utils/imageOptimization";
+import { getOptimizedImageUrl } from "../utils/cloudinaryOptimizer";
 
-const PostCard = ({ item }) => {
+const PostCard = ({ item, priority = false }) => {
   const { data: session } = useSession();
   const router = useRouter();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleDelete = async () => {
     if (!confirm("Czy na pewno chcesz usunąć ten post?")) return;
@@ -28,14 +31,37 @@ const PostCard = ({ item }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.imageContainer}>
-        <Image
-          src={item.img}
-          alt="children playing with blocks"
-          fill
-          style={{ objectFit: "cover" }}
-        />
-      </div>
+      {item.img ? (
+        <div className={styles.imageContainer}>
+          <Image
+            src={getOptimizedImageUrl(item.img, "post")}
+            alt={item.title || "Blog post image"}
+            fill
+            style={{ objectFit: "cover" }}
+            className={styles.image}
+            data-loaded={imageLoaded}
+            sizes={IMAGE_SIZES.post}
+            quality={70}
+            loading={priority ? "eager" : "lazy"}
+            priority={priority}
+            fetchPriority={priority ? "high" : "auto"}
+            decoding="async"
+            onLoad={() => setImageLoaded(true)}
+          />
+        </div>
+      ) : (
+        <div
+          className={styles.imageContainer}
+          style={{
+            backgroundColor: "#f5f5f5",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <span style={{ color: "#999", fontSize: "14px" }}>Brak zdjęcia</span>
+        </div>
+      )}
       <div className={styles.textContainer}>
         <Link href={`posts/${item.slug}`}>
           <div className={styles.title}>

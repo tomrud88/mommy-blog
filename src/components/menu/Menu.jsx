@@ -9,24 +9,34 @@ const Menu = async () => {
   let popularPosts = [];
 
   try {
-    const res = await fetch(getApiUrl("/posts/popular-by-category"), {
+    const apiUrl = getApiUrl("/posts/popular-by-category");
+    console.log("Fetching popular posts from:", apiUrl);
+
+    const res = await fetch(apiUrl, {
       cache: "no-store", // Disable caching for testing
     });
 
+    console.log("Popular posts API response status:", res.status);
+
     if (res.ok) {
-      popularPosts = await res.json();
+      const data = await res.json();
+      popularPosts = Array.isArray(data) ? data : [];
       console.log(
         "Popular posts fetched in Menu:",
         popularPosts.map((p) => ({ title: p.title, views: p.views }))
       );
     } else {
       console.error("Failed to fetch popular posts, status:", res.status);
+      const errorText = await res.text();
+      console.error("Error response:", errorText);
+      popularPosts = [];
     }
   } catch (error) {
     console.error("Failed to fetch popular posts by category:", error);
+    popularPosts = [];
   }
 
-  console.log("Popular posts count:", popularPosts.length);
+  console.log("Popular posts count:", popularPosts?.length || 0);
 
   // Mapping for CSS class names
   const categoryStyleMap = {
@@ -40,7 +50,7 @@ const Menu = async () => {
     <div className={styles.container}>
       <h2 style={{ fontSize: "22px" }}>Najpopularniejsze</h2>
       <div className={styles.items}>
-        {popularPosts.length > 0 ? (
+        {popularPosts && popularPosts.length > 0 ? (
           popularPosts.map((post) => (
             <Link
               key={post.id}
@@ -57,14 +67,7 @@ const Menu = async () => {
                 </span>
                 <h3 className={styles.postTitle}>{post.title}</h3>
                 <div className={styles.detail}>
-                  <span className={styles.username}>Ewa B</span>
-                  <span className={styles.date}>
-                    - {new Date(post.createdAt).toLocaleDateString("pl-PL")}
-                  </span>
-                  <span className={styles.views}>
-                    {" "}
-                    • {post.views} wyświetleń
-                  </span>
+                  <span className={styles.views}>{post.views} wyświetleń</span>
                 </div>
               </div>
             </Link>
@@ -81,9 +84,7 @@ const Menu = async () => {
                   5 sposobów jak spędzać aktywnie czas z dzieckiem
                 </h3>
                 <div className={styles.detail}>
-                  <span className={styles.username}>Ewa B</span>
-                  <span className={styles.date}> - 20.11.2024</span>
-                  <span className={styles.views}> • 0 wyświetleń</span>
+                  <span className={styles.views}>0 wyświetleń</span>
                 </div>
               </div>
             </Link>
@@ -96,9 +97,7 @@ const Menu = async () => {
                   5 sposobów jak spędzać aktywnie czas z dzieckiem
                 </h3>
                 <div className={styles.detail}>
-                  <span className={styles.username}>Ewa B</span>
-                  <span className={styles.date}> - 20.11.2024</span>
-                  <span className={styles.views}> • 0 wyświetleń</span>
+                  <span className={styles.views}>0 wyświetleń</span>
                 </div>
               </div>
             </Link>
@@ -111,9 +110,7 @@ const Menu = async () => {
                   5 sposobów jak spędzać aktywnie czas z dzieckiem
                 </h3>
                 <div className={styles.detail}>
-                  <span className={styles.username}>Ewa B</span>
-                  <span className={styles.date}> - 20.11.2024</span>
-                  <span className={styles.views}> • 0 wyświetleń</span>
+                  <span className={styles.views}>0 wyświetleń</span>
                 </div>
               </div>
             </Link>
@@ -126,9 +123,7 @@ const Menu = async () => {
                   5 sposobów jak spędzać aktywnie czas z dzieckiem
                 </h3>
                 <div className={styles.detail}>
-                  <span className={styles.username}>Ewa B</span>
-                  <span className={styles.date}> - 20.11.2024</span>
-                  <span className={styles.views}> • 0 wyświetleń</span>
+                  <span className={styles.views}>0 wyświetleń</span>
                 </div>
               </div>
             </Link>
@@ -158,10 +153,6 @@ const Menu = async () => {
               Czas dla siebie: Jak znaleźć równowagę między macierzyństwem a
               chwilą oddechu
             </h3>
-            <div className={styles.detail}>
-              <span className={styles.username}>Ewa B</span>
-              <span className={styles.date}> - 15.11.2024</span>
-            </div>
           </div>
         </Link>
         <Link
@@ -185,10 +176,6 @@ const Menu = async () => {
               Wspólne czy osobne grupy w przedszkolu? Plusy i minusy obu
               rozwiązań
             </h3>
-            <div className={styles.detail}>
-              <span className={styles.username}>Ewa B</span>
-              <span className={styles.date}> - 18.11.2024</span>
-            </div>
           </div>
         </Link>
         <Link
@@ -209,10 +196,6 @@ const Menu = async () => {
             <h3 className={styles.postTitle}>
               5 sposobów jak spędzać aktywnie czas z dzieckiem
             </h3>
-            <div className={styles.detail}>
-              <span className={styles.username}>Ewa B</span>
-              <span className={styles.date}> - 22.11.2024</span>
-            </div>
           </div>
         </Link>
         <Link
@@ -236,10 +219,6 @@ const Menu = async () => {
               Jak mówić, żeby dzieci nas słuchały. Jak słuchać, żeby dzieci do
               nas mówiły
             </h3>
-            <div className={styles.detail}>
-              <span className={styles.username}>Ewa B</span>
-              <span className={styles.date}> - 25.11.2024</span>
-            </div>
           </div>
         </Link>
       </div>

@@ -22,7 +22,8 @@ const getData = async (page, cat) => {
       return { posts: [], count: 0 };
     }
 
-    return res.json();
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.error("getData error:", error);
     // Return empty data on error
@@ -41,9 +42,15 @@ const PostList = async ({ page, cat }) => {
   return (
     <div className={styles.container}>
       <div className={styles.posts}>
-        {posts?.map((item) => (
-          <PostCard key={item.id} item={item} />
-        ))}
+        {posts && posts.length > 0 ? (
+          posts.map((item, index) => (
+            <PostCard key={item.id} item={item} priority={index === 0} />
+          ))
+        ) : (
+          <div className={styles.noPosts}>
+            <p>Brak postów do wyświetlenia.</p>
+          </div>
+        )}
       </div>
       <Pagination page={page} hasPrev={hasPrev} hasNext={hasNext} cat={cat} />
     </div>

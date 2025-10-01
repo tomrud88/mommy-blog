@@ -15,6 +15,8 @@ const Footer = () => {
               width={50}
               height={50}
               className={styles.imgLogo}
+              sizes="50px"
+              quality={90}
             />
             <h1 className={styles.logoText}>Mama z Wyobraźnią</h1>
           </Link>

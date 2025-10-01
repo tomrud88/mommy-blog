@@ -66,6 +66,36 @@ export const POST = async (req) => {
   try {
     const body = await req.json();
     const { title, desc, img, catSlug } = body;
+
+    // Walidacja wymaganych pól
+    const errors = {};
+
+    if (!title || !title.trim()) {
+      errors.title = "Tytuł jest wymagany";
+    }
+
+    if (!desc || !desc.trim() || desc.trim() === "<p><br></p>") {
+      errors.desc = "Treść artykułu jest wymagana";
+    }
+
+    if (!img || !img.trim()) {
+      errors.img = "Zdjęcie jest wymagane dla każdego artykułu";
+    }
+
+    if (!catSlug || !catSlug.trim()) {
+      errors.catSlug = "Kategoria jest wymagana";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return NextResponse.json(
+        {
+          message: "Błąd walidacji",
+          errors,
+        },
+        { status: 400 }
+      );
+    }
+
     console.log("Creating post:", {
       title,
       desc,
