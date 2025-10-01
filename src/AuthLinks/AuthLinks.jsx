@@ -9,7 +9,7 @@ const AuthLinks = () => {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   // Close mobile menu when screen size increases above 768px
   useEffect(() => {
@@ -30,7 +30,12 @@ const AuthLinks = () => {
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target) && open) {
+      if (
+        menuRef.current &&
+        event.target &&
+        !menuRef.current.contains(event.target) &&
+        open
+      ) {
         setOpen(false);
       }
     };
@@ -46,14 +51,22 @@ const AuthLinks = () => {
   return (
     <div ref={menuRef}>
       {status === "unauthenticated" ? (
-        <Link className={styles.link} href="/login">
-          Login
-        </Link>
+        <>
+          <Link className={styles.link} href="/login">
+            Login
+          </Link>
+          <Link className={styles.link} href="/register">
+            Rejestracja
+          </Link>
+        </>
       ) : (
         <>
-          <Link href="/write" className={styles.link}>
-            Napisz post
-          </Link>
+          {/* Show "Napisz post" only for admin users */}
+          {session?.user?.role === "admin" && (
+            <Link href="/write" className={styles.link}>
+              Napisz post
+            </Link>
+          )}
           <span className={styles.link} onClick={signOut}>
             Logout
           </span>
@@ -76,22 +89,34 @@ const AuthLinks = () => {
             O mnie
           </Link>
           {status === "unauthenticated" ? (
-            <Link
-              className={styles.loginLink}
-              href="/login"
-              onClick={() => setOpen(false)}
-            >
-              Login
-            </Link>
-          ) : (
             <>
               <Link
-                href="/write"
-                className={styles.sidelink}
+                className={styles.loginLink}
+                href="/login"
                 onClick={() => setOpen(false)}
               >
-                Dodaj post
+                Login
               </Link>
+              <Link
+                className={styles.loginLink}
+                href="/register"
+                onClick={() => setOpen(false)}
+              >
+                Rejestracja
+              </Link>
+            </>
+          ) : (
+            <>
+              {/* Show "Dodaj post" only for admin users in mobile menu */}
+              {session?.user?.role === "admin" && (
+                <Link
+                  href="/write"
+                  className={styles.sidelink}
+                  onClick={() => setOpen(false)}
+                >
+                  Dodaj post
+                </Link>
+              )}
               <span
                 className={styles.sidelink}
                 onClick={() => {

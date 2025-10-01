@@ -38,7 +38,7 @@ const Menu = async () => {
 
   return (
     <div className={styles.container}>
-      <h2 style={{ fontSize: "28px" }}>Najpopularniejsze</h2>
+      <h2 style={{ fontSize: "22px" }}>Najpopularniejsze</h2>
       <div className={styles.items}>
         {popularPosts.length > 0 ? (
           popularPosts.map((post) => (
@@ -137,7 +137,7 @@ const Menu = async () => {
       </div>
       <h1 className={styles.title}>Kategorie</h1>
       <MenuCategories />
-      <h2 style={{ fontSize: "28px" }}>Autor poleca</h2>
+      <h2 style={{ fontSize: "22px" }}>Autor poleca</h2>
       <div className={styles.items}>
         <Link
           href="/posts/czas-dla-siebie-jak-znale-rwnowag-midzy-macierzystwem-a-chwil-oddechu"

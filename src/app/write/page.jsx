@@ -38,6 +38,25 @@ const WritePage = () => {
     fetchCategories();
   }, []);
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        open &&
+        event.target &&
+        event.target.closest &&
+        !event.target.closest(".add-menu-container")
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
+
   // Configure Quill for proper list handling
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -107,26 +126,12 @@ const WritePage = () => {
     }
   };
 
-  // NAPRAWKA: Custom handler dla numerowanych list
-  const handleListClick = () => {
-    // Dodaj prostą numerowaną listę jako HTML
-    const currentValue = value;
-    const newList = `
-<ol>
-<li>Pierwszy punkt</li>
-<li>Drugi punkt</li>
-<li>Trzeci punkt</li>
-</ol>
-    `;
-    setValue(currentValue + newList);
-  };
-
   // NAPRAWKA: Problem React Quill z numeracją - lepsze modules
   const modules = {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
       ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }],
+      [{ list: "bullet" }],
       [{ indent: "-1" }, { indent: "+1" }],
       ["link"],
       ["clean"],
@@ -162,112 +167,90 @@ const WritePage = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <select
-        className={styles.select}
-        value={selectedCat}
-        onChange={(e) => setSelectedCat(e.target.value)}
-      >
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.slug}>
-            {cat.title}
-          </option>
-        ))}
-      </select>
+      <div className={styles.categoryContainer}>
+        <label className={styles.categoryLabel}>Kategoria:</label>
+        <select
+          className={styles.select}
+          value={selectedCat}
+          onChange={(e) => setSelectedCat(e.target.value)}
+        >
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.slug}>
+              {cat.title}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className={styles.editor}>
-        <button className={styles.button} onClick={() => setOpen(!open)}>
-          <Image src="/plus.png" alt="" width={16} height={16} />
-        </button>
-        {open && (
-          <div className={styles.add}>
-            <label className={styles.addButton}>
+        <div className={styles.editorSidebar}>
+          <div className={styles.editorControls}>
+            <div className="add-menu-container">
+              <button className={styles.button} onClick={() => setOpen(!open)}>
+                <Image src="/plus.png" alt="" width={16} height={16} />
+              </button>
+              {open && (
+                <div className={styles.add}>
+                  <label className={styles.addButton}>
+                    <Image
+                      src="/imageAdd.png"
+                      alt="Dodaj obraz"
+                      width={20}
+                      height={20}
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          setSelectedImage(e.target.files[0]);
+                          setOpen(false); // Close menu after selection
+                        }
+                      }}
+                    />
+                  </label>
+                  <button className={styles.addButton}>
+                    <Image src="/videoAdd.png" alt="" width={20} height={20} />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {selectedImage && (
+            <div className={styles.imagePreview}>
               <Image
-                src="/imageAdd.png"
-                alt="Dodaj obraz"
-                width={20}
-                height={20}
+                src={URL.createObjectURL(selectedImage)}
+                alt="Podgląd obrazu"
+                width={100}
+                height={100}
+                style={{ objectFit: "cover", borderRadius: "8px" }}
               />
-              <input
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={(e) => {
-                  if (e.target.files && e.target.files[0]) {
-                    setSelectedImage(e.target.files[0]);
-                  }
-                }}
-              />
-            </label>
-            <button className={styles.addButton}>
-              <Image src="/fileAdd.png" alt="" width={20} height={20} />
-            </button>
-            <button className={styles.addButton}>
-              <Image src="/videoAdd.png" alt="" width={20} height={20} />
-            </button>
-            <button
-              className={styles.addButton}
-              onClick={handleListClick}
-              title="Dodaj listę numerowaną"
-            >
-              📝
-            </button>
-          </div>
-        )}
-        {selectedImage && (
-          <div className={styles.imagePreview}>
-            <Image
-              src={URL.createObjectURL(selectedImage)}
-              alt="Podgląd obrazu"
-              width={200}
-              height={200}
-              style={{ objectFit: "cover", borderRadius: "8px" }}
-            />
-          </div>
-        )}
-        <ReactQuill
-          className={styles.textArea}
-          theme="snow"
-          value={value}
-          onChange={setValue}
-          placeholder="Napisz nowy artykuł"
-          modules={modules}
-          formats={formats}
-        />
+              <button
+                className={styles.removeImageButton}
+                onClick={() => setSelectedImage(null)}
+                type="button"
+                title="Usuń obraz"
+              >
+                ✕
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className={styles.editorContent}>
+          <ReactQuill
+            className={styles.textArea}
+            theme="snow"
+            value={value}
+            onChange={setValue}
+            placeholder="Napisz nowy artykuł"
+            modules={modules}
+            formats={formats}
+          />
+        </div>
         <style jsx global>{`
-          /* ZASADY FORMATOWANIA - NOWE POSTY */
-          .ql-editor ol {
-            counter-reset: item !important;
-            padding-left: 1.5em !important;
-            margin: 8px 0 12px 0 !important;
-          }
-
-          .ql-editor ol li {
-            list-style: none !important;
-            counter-increment: item !important;
-            position: relative !important;
-            display: block !important;
-            margin-bottom: 6px !important;
-            line-height: 1.6 !important;
-          }
-
-          .ql-editor ol li::before {
-            content: counter(item) ". " !important;
-            position: absolute !important;
-            left: -1.5em !important;
-            top: 0 !important;
-            font-weight: bold !important;
-            color: inherit !important;
-            width: 18px !important;
-          }
-
-          .ql-editor ol li[data-list] {
-            list-style: none !important;
-          }
-
-          .ql-editor ol li[data-list="ordered"] {
-            list-style: none !important;
-          }
-
           /* Lepsze odstępy w edytorze */
           .ql-editor h1,
           .ql-editor h2,

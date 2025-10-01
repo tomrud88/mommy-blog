@@ -47,7 +47,7 @@ const PostCard = ({ item }) => {
             Czytaj więcej
           </Link>
         </div>
-        {session && (
+        {session && session.user.role === "admin" && (
           <button onClick={handleDelete} className={styles.deleteButton}>
             Usuń
           </button>

@@ -41,6 +41,9 @@ export const GET = async (req) => {
     where: {
       ...(cat && { catSlug: cat }),
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   };
 
   try {
@@ -82,6 +85,9 @@ export const POST = async (req) => {
       },
     });
 
+    // Revalidate cache to show new post immediately
+    triggerRevalidate({ slug: post.slug, catSlug: post.catSlug });
+
     console.log("Post created:", post);
     return new NextResponse(JSON.stringify(post), { status: 200 });
   } catch (err) {
@@ -99,6 +105,14 @@ export const DELETE = async (req) => {
     return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
       status: 401,
     });
+  }
+
+  // Check if user is admin
+  if (session.user.role !== "admin") {
+    return new NextResponse(
+      JSON.stringify({ message: "Tylko administrator może usuwać posty." }),
+      { status: 403 }
+    );
   }
 
   try {

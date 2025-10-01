@@ -74,6 +74,22 @@
   background: linear-gradient(90deg, #1e4fa3 0%, #3576e6 100%);
 }
 
+.link {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--softTextColor);
+}
+
+.link a {
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link a:hover {
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 1054px) {
   .container {
     flex-direction: column;

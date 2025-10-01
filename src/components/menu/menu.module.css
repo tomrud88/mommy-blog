@@ -62,9 +62,13 @@
   background-color: rgb(67, 185, 13);
 }
 .postTitle {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--softTextColor);
+}
+.title {
+  font-size: 22px;
+  margin: 30px 0;
 }
 .detail {
   font-size: 12px;

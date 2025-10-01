@@ -3,35 +3,47 @@
   align-items: center;
   justify-content: space-between;
   background-color: #fafafa;
+  padding: 0 10px;
 }
 .logo {
-  flex: 1;
+  flex: 0 0 auto;
   margin-top: 10px;
   margin-left: 10px;
 }
 .title {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: bold;
   flex: 1;
   text-align: center;
+  min-width: 0;
 }
 .links {
   display: flex;
   font-size: 16px;
   font-weight: bold;
-  gap: 30px;
-  flex: 1;
-  justify-content: center;
+  gap: 20px;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  white-space: nowrap;
 }
 
 @media screen and (max-width: 1280px) {
   .title {
-    text-align: left;
-    font-size: 26px;
+    font-size: 24px;
   }
   .links {
     font-size: 14px;
-    gap: 25px;
+    gap: 15px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .title {
+    font-size: 22px;
+  }
+  .links {
+    font-size: 13px;
+    gap: 10px;
   }
 }
 @media screen and (max-width: 768px) {

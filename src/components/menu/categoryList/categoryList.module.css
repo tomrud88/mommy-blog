@@ -1,59 +1,58 @@
-.container{
- max-width: 1300px;
- display: flex;
- flex-direction: column;
- justify-content: center;
- margin-left: auto;
- margin-right: auto;
+.container {
+  max-width: 1300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.title{
-    margin:30px 0px;
+.title {
+  margin: 30px 0px;
+  font-size: 22px;
 }
 
-.categories{
-    display: flex;
-    justify-content: space-between;
-    gap:10px;
-    
+.categories {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
-.category{
-    display: flex;
-    align-items: center;
-    gap:10px;
-    text-transform: capitalize;
-    width: 20%;
-    height: 80px;
-    border-radius: 10px;
+.category {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: capitalize;
+  width: 20%;
+  height: 80px;
+  border-radius: 10px;
+  justify-content: center;
+}
+.image {
+  border-radius: 50%;
+}
+
+.category.mama {
+  background-color: rgb(65, 65, 245);
+}
+.category.dziecko {
+  background-color: rgb(223, 115, 196);
+}
+.category.zabawy {
+  background-color: rgb(245, 161, 65);
+}
+.category.książki {
+  background-color: rgb(67, 185, 13);
+}
+
+@media screen and (max-width: 700px) {
+  .title {
+    font-size: 22px;
+  }
+  .categories {
     justify-content: center;
-    
-}
-.image{
-    border-radius: 50%;
-}
-
-.category.mama{
-    background-color: rgb(65, 65, 245);
-}
-.category.dziecko{
-    background-color: rgb(223, 115, 196);
-}
-.category.zabawy{
-    background-color: rgb(245, 161, 65);
-}
-.category.książki{
-    background-color: rgb(67, 185, 13);
-}
-
-@media screen and (max-width:700px){
-    .title{
-        font-size: 22px;
-    }
-    .categories{
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .category{
-        width: 80%;
-    }
+    flex-wrap: wrap;
+  }
+  .category {
+    width: 80%;
+  }
 }

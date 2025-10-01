@@ -2,6 +2,7 @@
 import React from "react";
 import styles from "./loginPage.module.css";
 import Image from "next/image";
+import Link from "next/link";
 // import { auth, signIn, signOut } from '@/utils/auth';
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -29,19 +30,19 @@ const LoginPage = () => {
           className={styles.form}
           onSubmit={async (e) => {
             e.preventDefault();
-            const username = e.target.username.value;
+            const email = e.target.email.value;
             const password = e.target.password.value;
             await signIn("credentials", {
-              username,
+              email,
               password,
               callbackUrl: "/",
             });
           }}
         >
           <input
-            name="username"
-            type="text"
-            placeholder="Wpisz nazwę użytkownika"
+            name="email"
+            type="email"
+            placeholder="Wpisz email"
             className={styles.input}
             required
           />
@@ -56,6 +57,9 @@ const LoginPage = () => {
             Zaloguj się
           </button>
         </form>
+        <p className={styles.link}>
+          Nie masz konta? <Link href="/register">Zarejestruj się</Link>
+        </p>
       </div>
     </div>
   );
