@@ -19,6 +19,8 @@ const Pagination = ({ page, hasPrev, hasNext, cat }) => {
         className={styles.button}
         disabled={!hasPrev}
         onClick={() => router.push(createQuery(page - 1), { scroll: false })}
+        aria-label={`Przejdź do strony ${page - 1}`}
+        title={hasPrev ? `Strona ${page - 1}` : "Brak poprzedniej strony"}
       >
         Wstecz
       </button>
@@ -26,8 +28,9 @@ const Pagination = ({ page, hasPrev, hasNext, cat }) => {
         className={styles.button}
         disabled={!hasNext}
         onClick={() => router.push(createQuery(page + 1), { scroll: false })}
+        aria-label={`Przejdź do strony ${page + 1}`}
+        title={hasNext ? `Strona ${page + 1}` : "Brak następnej strony"}
       >
-        {" "}
         Do przodu
       </button>
     </div>

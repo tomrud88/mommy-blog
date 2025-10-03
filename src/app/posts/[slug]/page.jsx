@@ -4,6 +4,7 @@ import Menu from "@/components/menu/Menu";
 import Comments from "@/components/menu/comments/Comments";
 import ViewTracker from "@/components/ViewTracker";
 import HeroImage from "@/components/HeroImage/HeroImage";
+import PostNavigation from "@/components/PostNavigation/PostNavigation";
 import { getApiUrl } from "@/utils/getBaseUrl";
 import { sanitizeBlogContent } from "@/utils/htmlSanitizer";
 
@@ -31,11 +32,36 @@ const getData = async (slug) => {
   }
 };
 
+const getNavigationData = async (slug) => {
+  try {
+    const res = await fetch(getApiUrl(`/posts/${slug}/navigation`), {
+      next: {
+        revalidate: 60,
+        tags: ["posts", `navigation-${slug}`],
+      },
+    });
+
+    if (!res.ok) {
+      console.warn(`Navigation data not found for ${slug}`);
+      return { previous: null, next: null };
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching navigation:", error);
+    return { previous: null, next: null };
+  }
+};
+
 const SinglePage = async ({ params }) => {
   const { slug } = params;
 
   try {
-    const data = await getData(slug);
+    const [data, navigation] = await Promise.all([
+      getData(slug),
+      getNavigationData(slug)
+    ]);
 
     return (
       <div className={styles.container}>
@@ -65,6 +91,10 @@ const SinglePage = async ({ params }) => {
               dangerouslySetInnerHTML={{
                 __html: sanitizeBlogContent(data?.desc || ""),
               }}
+            />
+            <PostNavigation 
+              previousPost={navigation?.previous} 
+              nextPost={navigation?.next} 
             />
             <Comments postSlug={slug} />
           </div>

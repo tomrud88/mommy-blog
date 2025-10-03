@@ -6,28 +6,30 @@ import AuthLinks from "@/AuthLinks/AuthLinks";
 
 const Navbar = () => {
   return (
-    <div className={styles.container}>
-      <Link href="/" className={styles.logo}>
-        <Image
-          src="/logo-mom.transformed.png"
-          width={110}
-          height={90}
-          alt="logo"
-        ></Image>
-      </Link>
-      <Link href="/" className={styles.title}>
-        Mama z Wyobraźnią
-      </Link>
-      <div className={styles.links}>
-        <Link href="/" className={styles.link}>
-          Strona Główna
+    <header className={styles.container} role="banner">
+      <nav id="navigation" className={styles.nav} role="navigation" aria-label="Główna nawigacja">
+        <Link href="/" className={styles.logo} aria-label="Strona główna - Mama z Wyobraźnią">
+          <Image
+            src="/logo-mom.transformed.png"
+            width={110}
+            height={90}
+            alt="Logo Mama z Wyobraźnią - stylizowany obraz mamy z dzieckiem"
+          />
         </Link>
-        <Link href="/about" className={styles.link}>
-          O mnie
+        <Link href="/" className={styles.title}>
+          Mama z Wyobraźnią
         </Link>
-        <AuthLinks />
-      </div>
-    </div>
+        <div className={styles.links}>
+          <Link href="/" className={styles.link} aria-label="Przejdź do strony głównej">
+            Strona Główna
+          </Link>
+          <Link href="/about" className={styles.link} aria-label="Przejdź do sekcji o mnie">
+            O mnie
+          </Link>
+          <AuthLinks />
+        </div>
+      </nav>
+    </header>
   );
 };
 

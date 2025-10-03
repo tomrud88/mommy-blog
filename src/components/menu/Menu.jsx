@@ -143,7 +143,7 @@ const Menu = async () => {
               src="/balance.webp"
               height={100}
               width={100}
-              alt=""
+              alt="Kobieta medytująca - równowaga między macierzyństwem a czasem dla siebie"
               className={styles.image}
             />
           </div>
@@ -187,7 +187,7 @@ const Menu = async () => {
               src="/mother-with-daughter-summer.webp"
               height={100}
               width={100}
-              alt=""
+              alt="Matka z córką spędzająca aktywny czas na świeżym powietrzu"
               className={styles.image}
             />
           </div>
@@ -207,7 +207,7 @@ const Menu = async () => {
               src="/Jak-mówić-żeby-dzieci-nas-słuchały.webp"
               height={100}
               width={100}
-              alt=""
+              alt="Okładka książki o komunikacji z dziećmi"
               className={styles.image}
             />
           </div>

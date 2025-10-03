@@ -5,6 +5,7 @@ import Footer from "@/footer/Footer";
 import TopSection from "@/topSection/TopSection";
 import AuthProvider from "@/providers/AuthProvider";
 import ErrorBoundary from "@/components/ErrorBoundary/ErrorBoundary";
+import SkipLinks from "@/components/SkipLinks/SkipLinks";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -82,11 +83,14 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={inter.className}>
+        <SkipLinks />
         <ErrorBoundary>
           <AuthProvider>
             <div className="container">
               <Navbar />
-              <div className="wrapper">{children}</div>
+              <main id="main-content" className="wrapper" role="main" aria-label="Główna treść strony">
+                {children}
+              </main>
               <Footer />
             </div>
           </AuthProvider>

@@ -21,12 +21,22 @@ const WritePage = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
   const [title, setTitle] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCat, setSelectedCat] = useState("");
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Cleanup preview URL on unmount
+  useEffect(() => {
+    return () => {
+      if (imagePreviewUrl && typeof window !== "undefined") {
+        URL.revokeObjectURL(imagePreviewUrl);
+      }
+    };
+  }, [imagePreviewUrl]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -162,6 +172,13 @@ const WritePage = () => {
         setValue("");
         setSelectedImage(null);
         setImgUrl("");
+        
+        // Clean up preview URL
+        if (imagePreviewUrl && typeof window !== "undefined") {
+          URL.revokeObjectURL(imagePreviewUrl);
+        }
+        setImagePreviewUrl("");
+        
         setErrors({});
         router.push("/");
       } else {
@@ -285,7 +302,16 @@ const WritePage = () => {
                       style={{ display: "none" }}
                       onChange={(e) => {
                         if (e.target.files && e.target.files[0]) {
-                          setSelectedImage(e.target.files[0]);
+                          const file = e.target.files[0];
+                          setSelectedImage(file);
+                          
+                          // Create preview URL
+                          if (typeof window !== "undefined") {
+                            const previewUrl = URL.createObjectURL(file);
+                            console.log('Preview URL created:', previewUrl);
+                            setImagePreviewUrl(previewUrl);
+                          }
+                          
                           setOpen(false); // Close menu after selection
                         }
                       }}
@@ -299,23 +325,38 @@ const WritePage = () => {
             </div>
           </div>
 
-          {selectedImage && (
+          {selectedImage && imagePreviewUrl && (
             <div className={styles.imagePreview}>
-              <Image
-                src={URL.createObjectURL(selectedImage)}
+              <img
+                src={imagePreviewUrl}
                 alt="Podgląd obrazu"
-                width={100}
-                height={100}
-                style={{ objectFit: "cover", borderRadius: "8px" }}
+                className={styles.previewImage}
               />
               <button
                 className={styles.removeImageButton}
-                onClick={() => setSelectedImage(null)}
+                onClick={() => {
+                  setSelectedImage(null);
+                  setImagePreviewUrl("");
+                  // Clean up URL object
+                  if (imagePreviewUrl && typeof window !== "undefined") {
+                    URL.revokeObjectURL(imagePreviewUrl);
+                  }
+                }}
                 type="button"
                 title="Usuń obraz"
+                aria-label="Usuń wybrany obraz"
               >
                 ✕
               </button>
+            </div>
+          )}
+          
+          {!selectedImage && (
+            <div className={styles.imagePlaceholder}>
+              <div className={styles.placeholderIcon}>📷</div>
+              <p className={styles.placeholderText}>
+                Kliknij ikonę obrazu powyżej, aby dodać zdjęcie do artykułu
+              </p>
             </div>
           )}
         </div>

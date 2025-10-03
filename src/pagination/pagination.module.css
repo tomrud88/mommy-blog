@@ -10,9 +10,46 @@
     cursor:pointer;
     background-color: rgb(243, 143, 12);
     color:white;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.button:hover:not(:disabled) {
+    background-color: rgb(220, 130, 10);
+    transform: translateY(-1px);
+}
+
+.button:focus {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
 }
 
 .button:disabled{
     cursor:not-allowed;
     background-color: rgba(243, 143, 12, 0.466);
+    opacity: 0.6;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .button {
+        border: 2px solid #000;
+    }
+    
+    .button:focus {
+        outline: 3px solid #000;
+        outline-offset: 2px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .button {
+        transition: none;
+    }
+    
+    .button:hover:not(:disabled) {
+        transform: none;
+    }
 }

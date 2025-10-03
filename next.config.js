@@ -13,7 +13,7 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // Note: unsafe-inline needed for React
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: https: http:",
+              "img-src 'self' data: blob: https: http:",
               "connect-src 'self' https:",
               "frame-src 'none'",
               "object-src 'none'",

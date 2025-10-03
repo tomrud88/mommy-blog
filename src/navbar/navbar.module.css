@@ -5,6 +5,13 @@
   background-color: #fafafa;
   padding: 0 10px;
 }
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 .logo {
   flex: 0 0 auto;
   margin-top: 10px;
