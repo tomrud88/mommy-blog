@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './skipLinks.module.css';
+import React from "react";
+import styles from "./skipLinks.module.css";
 
 /**
  * Skip Links component for keyboard navigation accessibility

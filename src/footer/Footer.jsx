@@ -5,10 +5,19 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer id="footer" className={styles.container} role="contentinfo" aria-label="Stopka strony">
+    <footer
+      id="footer"
+      className={styles.container}
+      role="contentinfo"
+      aria-label="Stopka strony"
+    >
       <div className={styles.insideContainer}>
         <div className={styles.info}>
-          <Link href="/" className={styles.logo} aria-label="Powrót na stronę główną">
+          <Link
+            href="/"
+            className={styles.logo}
+            aria-label="Powrót na stronę główną"
+          >
             <Image
               src="/logoN.png"
               alt="Logo Mama z Wyobraźnią"

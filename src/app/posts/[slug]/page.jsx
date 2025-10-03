@@ -60,7 +60,7 @@ const SinglePage = async ({ params }) => {
   try {
     const [data, navigation] = await Promise.all([
       getData(slug),
-      getNavigationData(slug)
+      getNavigationData(slug),
     ]);
 
     return (
@@ -92,9 +92,9 @@ const SinglePage = async ({ params }) => {
                 __html: sanitizeBlogContent(data?.desc || ""),
               }}
             />
-            <PostNavigation 
-              previousPost={navigation?.previous} 
-              nextPost={navigation?.next} 
+            <PostNavigation
+              previousPost={navigation?.previous}
+              nextPost={navigation?.next}
             />
             <Comments postSlug={slug} />
           </div>

@@ -9,7 +9,10 @@ const PostNavigation = ({ previousPost, nextPost }) => {
         {/* Previous Post */}
         <div className={styles.navItem}>
           {previousPost ? (
-            <Link href={`/posts/${previousPost.slug}`} className={styles.navLink}>
+            <Link
+              href={`/posts/${previousPost.slug}`}
+              className={styles.navLink}
+            >
               <div className={styles.navDirection}>
                 <span className={styles.arrow}>←</span>
                 <span className={styles.label}>Poprzedni artykuł</span>
@@ -31,7 +34,9 @@ const PostNavigation = ({ previousPost, nextPost }) => {
             </Link>
           ) : (
             <div className={styles.navPlaceholder}>
-              <span className={styles.disabledLabel}>Brak poprzedniego artykułu</span>
+              <span className={styles.disabledLabel}>
+                Brak poprzedniego artykułu
+              </span>
             </div>
           )}
         </div>
@@ -69,7 +74,9 @@ const PostNavigation = ({ previousPost, nextPost }) => {
             </Link>
           ) : (
             <div className={styles.navPlaceholder}>
-              <span className={styles.disabledLabel}>Brak następnego artykułu</span>
+              <span className={styles.disabledLabel}>
+                Brak następnego artykułu
+              </span>
             </div>
           )}
         </div>

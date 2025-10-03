@@ -172,13 +172,13 @@ const WritePage = () => {
         setValue("");
         setSelectedImage(null);
         setImgUrl("");
-        
+
         // Clean up preview URL
         if (imagePreviewUrl && typeof window !== "undefined") {
           URL.revokeObjectURL(imagePreviewUrl);
         }
         setImagePreviewUrl("");
-        
+
         setErrors({});
         router.push("/");
       } else {
@@ -304,14 +304,14 @@ const WritePage = () => {
                         if (e.target.files && e.target.files[0]) {
                           const file = e.target.files[0];
                           setSelectedImage(file);
-                          
+
                           // Create preview URL
                           if (typeof window !== "undefined") {
                             const previewUrl = URL.createObjectURL(file);
-                            console.log('Preview URL created:', previewUrl);
+                            console.log("Preview URL created:", previewUrl);
                             setImagePreviewUrl(previewUrl);
                           }
-                          
+
                           setOpen(false); // Close menu after selection
                         }
                       }}
@@ -350,7 +350,7 @@ const WritePage = () => {
               </button>
             </div>
           )}
-          
+
           {!selectedImage && (
             <div className={styles.imagePlaceholder}>
               <div className={styles.placeholderIcon}>📷</div>

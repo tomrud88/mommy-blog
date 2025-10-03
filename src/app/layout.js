@@ -88,7 +88,12 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <div className="container">
               <Navbar />
-              <main id="main-content" className="wrapper" role="main" aria-label="Główna treść strony">
+              <main
+                id="main-content"
+                className="wrapper"
+                role="main"
+                aria-label="Główna treść strony"
+              >
                 {children}
               </main>
               <Footer />

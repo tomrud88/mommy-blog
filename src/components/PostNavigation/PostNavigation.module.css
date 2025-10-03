@@ -153,37 +153,37 @@
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .navItem {
     width: 100%;
     max-width: none;
   }
-  
+
   .navLink {
     height: auto;
     min-height: 100px;
   }
-  
+
   .postPreview {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .navItem:last-child .postPreview {
     flex-direction: column;
   }
-  
+
   .postTitle {
     font-size: 14px;
     -webkit-line-clamp: 3;
     line-clamp: 3;
   }
-  
+
   .homeLink {
     flex-direction: row;
     padding: 12px 24px;
   }
-  
+
   .homeIcon {
     font-size: 20px;
   }

@@ -171,11 +171,15 @@
 .imagePreview {
   margin: 20px 0;
   padding: 20px;
-  border: 2px solid #4CAF50;
+  border: 2px solid #4caf50;
   border-radius: 16px;
   text-align: center;
   width: 100%;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.1),
+    rgba(76, 175, 80, 0.05)
+  );
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
 }
 

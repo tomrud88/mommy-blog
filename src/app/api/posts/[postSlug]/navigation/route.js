@@ -9,59 +9,60 @@ export const GET = async (req, { params }) => {
     // First, get the current post to get its creation date
     const currentPost = await prisma.post.findUnique({
       where: { slug: postSlug },
-      select: { id: true, createdAt: true }
+      select: { id: true, createdAt: true },
     });
 
     if (!currentPost) {
-      return new NextResponse(
-        JSON.stringify({ message: "Post not found" }), 
-        { status: 404 }
-      );
+      return new NextResponse(JSON.stringify({ message: "Post not found" }), {
+        status: 404,
+      });
     }
 
     // Get previous post (older)
     const previousPost = await prisma.post.findFirst({
       where: {
         createdAt: {
-          lt: currentPost.createdAt
-        }
+          lt: currentPost.createdAt,
+        },
       },
       select: {
         slug: true,
         title: true,
-        img: true
+        img: true,
       },
       orderBy: {
-        createdAt: 'desc'
-      }
+        createdAt: "desc",
+      },
     });
 
     // Get next post (newer)
     const nextPost = await prisma.post.findFirst({
       where: {
         createdAt: {
-          gt: currentPost.createdAt
-        }
+          gt: currentPost.createdAt,
+        },
       },
       select: {
         slug: true,
         title: true,
-        img: true
+        img: true,
       },
       orderBy: {
-        createdAt: 'asc'
-      }
+        createdAt: "asc",
+      },
     });
 
-    return new NextResponse(JSON.stringify({
-      previous: previousPost,
-      next: nextPost
-    }), { status: 200 });
-
+    return new NextResponse(
+      JSON.stringify({
+        previous: previousPost,
+        next: nextPost,
+      }),
+      { status: 200 }
+    );
   } catch (err) {
     console.error("Error fetching navigation:", err);
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }), 
+      JSON.stringify({ message: "Something went wrong!" }),
       { status: 500 }
     );
   }
