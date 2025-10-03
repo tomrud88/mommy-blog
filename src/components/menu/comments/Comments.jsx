@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+import { useCSRFForm } from "@/hooks/useCSRFToken";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -21,6 +22,7 @@ const fetcher = async (url) => {
 
 const Comments = ({ postSlug }) => {
   const { status } = useSession();
+  const { submitJSON, isReady: csrfReady } = useCSRFForm();
 
   const { data, mutate, isLoading, isError } = useSWR(
     `/api/comments?postSlug=${postSlug}`,
@@ -28,13 +30,42 @@ const Comments = ({ postSlug }) => {
   );
 
   const [desc, setDesc] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
-    await fetch("/api/comments", {
-      method: "POST",
-      body: JSON.stringify({ desc, postSlug }),
-    });
-    mutate();
+    if (!desc.trim()) {
+      alert("Proszę napisać komentarz");
+      return;
+    }
+
+    if (!csrfReady) {
+      alert("Ładowanie zabezpieczeń, spróbuj ponownie za chwilę");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await submitJSON("/api/comments", {
+        desc: desc.trim(),
+        postSlug,
+      });
+
+      if (res.ok) {
+        setDesc("");
+        mutate(); // Refresh comments
+      } else {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(
+          errorData.message || "Błąd podczas dodawania komentarza"
+        );
+      }
+    } catch (error) {
+      console.error("Comment submission error:", error);
+      alert(error.message || "Wystąpił błąd podczas dodawania komentarza");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -43,12 +74,18 @@ const Comments = ({ postSlug }) => {
       {status === "authenticated" ? (
         <div className={styles.write}>
           <textarea
-            placeholder="write a comment..."
+            placeholder="Napisz komentarz..."
             className={styles.input}
+            value={desc}
             onChange={(e) => setDesc(e.target.value)}
+            disabled={isSubmitting}
           />
-          <button className={styles.button} onClick={handleSubmit}>
-            Dodaj
+          <button
+            className={styles.button}
+            onClick={handleSubmit}
+            disabled={isSubmitting || !csrfReady}
+          >
+            {isSubmitting ? "Dodawanie..." : "Dodaj"}
           </button>
         </div>
       ) : (

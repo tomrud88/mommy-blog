@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { sanitizeBlogContent } from "@/utils/htmlSanitizer";
+import { applyRateLimit } from "@/utils/rateLimiter";
 
 const triggerRevalidate = ({ slug, catSlug } = {}) => {
   revalidateTag("posts");
@@ -63,18 +65,65 @@ export const GET = async (req) => {
 };
 
 export const POST = async (req) => {
+  // SECURITY: Apply rate limiting first
+  try {
+    await applyRateLimit(req, "posts");
+  } catch (error) {
+    if (error.status === 429) {
+      const response = NextResponse.json(
+        {
+          error: "Too Many Requests",
+          message: error.message,
+          type: "RATE_LIMIT_EXCEEDED",
+        },
+        { status: 429 }
+      );
+
+      // Add rate limit headers
+      if (error.headers) {
+        Object.entries(error.headers).forEach(([key, value]) => {
+          response.headers.set(key, value);
+        });
+      }
+
+      return response;
+    }
+    // If other error, log but continue
+    console.error("Rate limiting error:", error);
+  }
+
+  // SECURITY: Check authentication
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return new NextResponse(JSON.stringify({ message: "Unauthorized" }), {
+      status: 401,
+    });
+  }
+
+  // SECURITY: Check if user is admin
+  if (session.user.role !== "admin") {
+    return new NextResponse(
+      JSON.stringify({ message: "Tylko administrator może tworzyć posty." }),
+      { status: 403 }
+    );
+  }
+
   try {
     const body = await req.json();
     const { title, desc, img, catSlug } = body;
 
+    // SECURITY: Sanitize HTML content to prevent XSS
+    const sanitizedDesc = sanitizeBlogContent(desc);
+    const sanitizedTitle = title.trim();
+
     // Walidacja wymaganych pól
     const errors = {};
 
-    if (!title || !title.trim()) {
+    if (!sanitizedTitle) {
       errors.title = "Tytuł jest wymagany";
     }
 
-    if (!desc || !desc.trim() || desc.trim() === "<p><br></p>") {
+    if (!sanitizedDesc || sanitizedDesc.trim() === "<p><br></p>") {
       errors.desc = "Treść artykułu jest wymagana";
     }
 
@@ -97,18 +146,18 @@ export const POST = async (req) => {
     }
 
     console.log("Creating post:", {
-      title,
-      desc,
+      title: sanitizedTitle,
+      desc: sanitizedDesc,
       img,
       catSlug,
     });
 
     const post = await prisma.post.create({
       data: {
-        title,
-        desc,
+        title: sanitizedTitle,
+        desc: sanitizedDesc,
         img,
-        slug: slugify(title),
+        slug: slugify(sanitizedTitle),
         cat: {
           connect: { slug: catSlug || "mama" },
         },

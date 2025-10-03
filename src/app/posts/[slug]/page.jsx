@@ -5,6 +5,7 @@ import Comments from "@/components/menu/comments/Comments";
 import ViewTracker from "@/components/ViewTracker";
 import HeroImage from "@/components/HeroImage/HeroImage";
 import { getApiUrl } from "@/utils/getBaseUrl";
+import { sanitizeBlogContent } from "@/utils/htmlSanitizer";
 
 const getData = async (slug) => {
   try {
@@ -61,7 +62,9 @@ const SinglePage = async ({ params }) => {
           <div className={styles.post}>
             <div
               className={styles.description}
-              dangerouslySetInnerHTML={{ __html: data?.desc }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeBlogContent(data?.desc || ""),
+              }}
             />
             <Comments postSlug={slug} />
           </div>

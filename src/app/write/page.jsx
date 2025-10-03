@@ -6,6 +6,7 @@ import Image from "next/image";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useCSRFForm } from "@/hooks/useCSRFToken";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
@@ -16,6 +17,7 @@ const Quill = dynamic(() => import("quill"), { ssr: false });
 const WritePage = () => {
   const { data, status } = useSession();
   const router = useRouter();
+  const { submitJSON, isReady: csrfReady } = useCSRFForm();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
@@ -108,6 +110,12 @@ const WritePage = () => {
   };
 
   const handlePublish = async () => {
+    // Check if CSRF is ready
+    if (!csrfReady) {
+      alert("Zabezpieczenia się ładują, spróbuj ponownie za chwilę.");
+      return;
+    }
+
     // Walidacja formularza
     if (!validateForm()) {
       return;
@@ -116,46 +124,58 @@ const WritePage = () => {
     setIsSubmitting(true);
     setErrors({});
 
-    let finalImgUrl = imgUrl; // Use the provided URL
-    if (selectedImage && !imgUrl) {
-      const formData = new FormData();
-      formData.append("file", selectedImage);
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-      if (uploadRes.ok) {
-        const uploadData = await uploadRes.json();
-        finalImgUrl = uploadData.url;
-      } else {
-        alert("Błąd podczas przesyłania obrazu.");
-        return;
+    try {
+      let finalImgUrl = imgUrl; // Use the provided URL
+
+      if (selectedImage && !imgUrl) {
+        // Upload image with CSRF protection
+        const formData = new FormData();
+        formData.append("file", selectedImage);
+
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (uploadRes.ok) {
+          const uploadData = await uploadRes.json();
+          finalImgUrl = uploadData.url;
+        } else {
+          const errorData = await uploadRes.json().catch(() => ({}));
+          throw new Error(
+            errorData.message || "Błąd podczas przesyłania obrazu."
+          );
+        }
       }
-    }
-    const res = await fetch("/api/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+
+      // Submit post with CSRF protection
+      const res = await submitJSON("/api/posts", {
         title,
-        desc: value, // Zwykłe value bez transformacji
+        desc: value,
         img: finalImgUrl,
         catSlug: selectedCat,
-      }),
-    });
-    if (res.ok) {
-      alert("Artykuł został opublikowany!");
-      setTitle("");
-      setValue("");
-      setSelectedImage(null);
-      setImgUrl("");
-      setErrors({});
-      router.push("/");
-    } else {
-      const errorData = await res.json().catch(() => ({}));
-      alert(errorData.message || "Wystąpił błąd podczas publikacji.");
-    }
+      });
 
-    setIsSubmitting(false);
+      if (res.ok) {
+        alert("Artykuł został opublikowany!");
+        setTitle("");
+        setValue("");
+        setSelectedImage(null);
+        setImgUrl("");
+        setErrors({});
+        router.push("/");
+      } else {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(
+          errorData.message || "Wystąpił błąd podczas publikacji."
+        );
+      }
+    } catch (error) {
+      console.error("Publish error:", error);
+      alert(error.message || "Wystąpił błąd podczas publikacji.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // NAPRAWKA: Problem React Quill z numeracją - lepsze modules

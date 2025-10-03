@@ -1,6 +1,7 @@
 import { prisma } from "@/utils/connect";
 import { NextResponse } from "next/server";
 import { getAuthSession } from "@/utils/auth";
+import { applyRateLimit } from "@/utils/rateLimiter";
 
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
@@ -26,6 +27,32 @@ export const GET = async (req) => {
 };
 
 export const POST = async (req) => {
+  // SECURITY: Apply rate limiting for comments
+  try {
+    await applyRateLimit(req, "comments");
+  } catch (error) {
+    if (error.status === 429) {
+      const response = NextResponse.json(
+        {
+          error: "Too Many Requests",
+          message: "Zbyt wiele komentarzy. Spróbuj ponownie za chwilę.",
+          type: "RATE_LIMIT_EXCEEDED",
+        },
+        { status: 429 }
+      );
+
+      // Add rate limit headers
+      if (error.headers) {
+        Object.entries(error.headers).forEach(([key, value]) => {
+          response.headers.set(key, value);
+        });
+      }
+
+      return response;
+    }
+    console.error("Rate limiting error:", error);
+  }
+
   console.log("post request");
 
   try {

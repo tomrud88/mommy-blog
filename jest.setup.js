@@ -1,79 +1,82 @@
 // Optional: configure or set up a testing framework before each test.
 // If you delete this file, remove `setupFilesAfterEnv` from `jest.config.js`
 
-// Used for __tests__/testing-library.js
-// Learn more: https://github.com/testing-library/jest-dom
-import "@testing-library/jest-dom";
+// Only setup browser environment mocks when in jsdom environment
+if (typeof window !== "undefined") {
+  // Used for __tests__/testing-library.js
+  // Learn more: https://github.com/testing-library/jest-dom
+  require("@testing-library/jest-dom");
 
-// Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
+  // Mock IntersectionObserver
+  global.IntersectionObserver = class IntersectionObserver {
+    constructor() {}
 
-  observe() {
-    return null;
-  }
+    observe() {
+      return null;
+    }
 
-  disconnect() {
-    return null;
-  }
+    disconnect() {
+      return null;
+    }
 
-  unobserve() {
-    return null;
-  }
-};
+    unobserve() {
+      return null;
+    }
+  };
 
-// Mock ResizeObserver
-global.ResizeObserver = class ResizeObserver {
-  constructor() {}
+  // Mock ResizeObserver
+  global.ResizeObserver = class ResizeObserver {
+    constructor() {}
 
-  observe() {
-    return null;
-  }
+    observe() {
+      return null;
+    }
 
-  disconnect() {
-    return null;
-  }
+    disconnect() {
+      return null;
+    }
 
-  unobserve() {
-    return null;
-  }
-};
+    unobserve() {
+      return null;
+    }
+  };
 
-// Mock window.matchMedia
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: jest.fn().mockImplementation((query) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(), // deprecated
-    removeListener: jest.fn(), // deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
+  // Mock window.matchMedia
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // deprecated
+      removeListener: jest.fn(), // deprecated
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
 
-// Mock window.scrollTo
-window.scrollTo = jest.fn();
+  // Mock window.scrollTo
+  window.scrollTo = jest.fn();
 
-// Mock localStorage
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-};
-global.localStorage = localStorageMock;
+  // Mock localStorage
+  const localStorageMock = {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    removeItem: jest.fn(),
+    clear: jest.fn(),
+  };
+  global.localStorage = localStorageMock;
 
-// Mock sessionStorage
-const sessionStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
-};
-global.sessionStorage = sessionStorageMock;
+  // Mock sessionStorage
+  const sessionStorageMock = {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    removeItem: jest.fn(),
+    clear: jest.fn(),
+  };
+  global.sessionStorage = sessionStorageMock;
+}
 
 // Mock next/router
 jest.mock("next/router", () => ({
