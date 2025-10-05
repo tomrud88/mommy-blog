@@ -1,35 +1,264 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 👶 Mommy Blog - Platforma dla Rodziców
 
-## Getting Started
+Nowoczesny blog o macierzyństwie i rodzicielstwie zbudowany w Next.js 14. Platforma oferuje bezpieczne środowisko do dzielenia się doświadczeniami, poradami i wsparciem dla rodziców.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-14.2.15-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb)
 
+## ✨ Funkcjonalności
+
+### 🔍 **Zaawansowane Wyszukiwanie**
+- Real-time search z debouncing (300ms)
+- Wyszukiwanie w tytułach i opisach postów
+- Kompaktowy widok wyników z miniaturkami
+- Podświetlanie wyszukanych fraz
+
+### 📝 **Zarządzanie Treścią**
+- Tworzenie i edycja postów z edytorem Rich Text (React Quill)
+- System kategorii tematycznych
+- Upload i optymalizacja obrazów (Cloudinary)
+- Nawigacja między postami z miniaturkami
+
+### 💬 **System Komentarzy**
+- Komentarze przypisane do użytkowników
+- Moderacja i zarządzanie komentarzami
+- Real-time aktualizacje
+
+### 🔐 **Bezpieczeństwo**
+- NextAuth.js z wieloma providerami
+- Rate limiting na wszystkich API endpoints
+- Ochrona przed XSS (DOMPurify)
+- Tokeny CSRF dla bezpiecznych operacji
+- Walidacja i sanityzacja danych
+
+### ♿ **Dostępność (WCAG 2.1 Level AA)**
+- Skip links dla nawigacji klawiaturowej
+- Semantyczne HTML i ARIA labels
+- Wsparcie dla screen readerów
+- Responsive design dla wszystkich urządzeń
+
+### 🎨 **Nowoczesny Design**
+- Glass-morphism i gradient efekty
+- Smooth animacje i transitions
+- Responsive design dla wszystkich urządzeń
+- Custom scrollbars i loading states
+
+## 🛠️ Stack Technologiczny
+
+### Frontend
+- **Next.js 14.2.15** - React framework z App Router
+- **React 18** - Biblioteka UI z Hooks
+- **CSS Modules** - Scoped styling
+- **React Quill** - Rich Text Editor
+
+### Backend & Database
+- **Next.js API Routes** - Serverless API
+- **Prisma ORM** - Type-safe database client
+- **MongoDB** - NoSQL database
+- **NextAuth.js** - Authentication library
+
+### Usługi Zewnętrzne
+- **Cloudinary** - Hosting i optymalizacja obrazów
+- **Upstash Redis** - Rate limiting (opcjonalnie)
+
+### Bezpieczeństwo
+- **DOMPurify** - XSS protection
+- **bcryptjs** - Password hashing
+- **CSRF Tokens** - Cross-site request forgery protection
+- **Rate Limiting** - API protection
+
+## 🚀 Instalacja i Uruchomienie
+
+### Wymagania
+- Node.js 18+ 
+- npm lub yarn
+- MongoDB (lokalnie lub MongoDB Atlas)
+
+### 1. Klonowanie repozytorium
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone https://github.com/tomrud88/mommy-blog.git
+cd mommy-blog
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalacja zależności
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 3. Konfiguracja zmiennych środowiskowych
+Stwórz plik `.env.local` w głównym katalogu:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```env
+# Database
+DATABASE_URL="mongodb://localhost:27017/mommy-blog"
 
-## Learn More
+# NextAuth.js
+NEXTAUTH_SECRET="your-nextauth-secret"
+NEXTAUTH_URL="http://localhost:3000"
 
-To learn more about Next.js, take a look at the following resources:
+# OAuth Providers (opcjonalnie)
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Cloudinary
+CLOUDINARY_CLOUD_NAME="your-cloudinary-cloud-name"
+CLOUDINARY_API_KEY="your-cloudinary-api-key"
+CLOUDINARY_API_SECRET="your-cloudinary-api-secret"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+# Rate Limiting (opcjonalnie)
+UPSTASH_REDIS_REST_URL="your-upstash-redis-url"
+UPSTASH_REDIS_REST_TOKEN="your-upstash-redis-token"
+```
 
-## Deploy on Vercel
+### 4. Inicjalizacja bazy danych
+```bash
+npx prisma generate
+npx prisma db push
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 5. Uruchomienie aplikacji
+```bash
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-"# mommy-blog" 
+Aplikacja będzie dostępna pod adresem `http://localhost:3000`
+
+## 📁 Struktura Projektu
+
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/               # API endpoints
+│   │   ├── auth/          # Authentication
+│   │   ├── posts/         # Posts management
+│   │   ├── comments/      # Comments system
+│   │   └── search/        # Search functionality
+│   ├── posts/[slug]/      # Dynamic post pages
+│   └── globals.css        # Global styles
+├── components/            # Reusable components
+│   ├── search/           # Search functionality
+│   ├── menu/             # Navigation components
+│   └── SkipLinks/        # Accessibility
+├── utils/                # Utility functions
+│   ├── auth.js           # Authentication config
+│   ├── rateLimiter.js    # Rate limiting
+│   └── htmlSanitizer.js  # XSS protection
+└── prisma/
+    └── schema.prisma     # Database schema
+```
+
+## 🔧 API Endpoints
+
+### Posts
+- `GET /api/posts` - Lista postów z paginacją
+- `POST /api/posts` - Tworzenie nowego postu (auth required)
+- `DELETE /api/posts` - Usuwanie postu (admin only)
+- `GET /api/posts/[slug]` - Pobieranie pojedynczego postu
+
+### Search
+- `GET /api/search?q={query}` - Wyszukiwanie postów
+
+### Comments
+- `GET /api/comments?postSlug={slug}` - Komentarze dla postu
+- `POST /api/comments` - Dodawanie komentarza (auth required)
+
+### Authentication
+- `POST /api/auth/register` - Rejestracja użytkownika
+- NextAuth.js endpoints w `/api/auth/`
+
+## 🔒 Bezpieczeństwo
+
+### Rate Limiting
+- **Rejestracja**: 3 próby/godzinę na IP
+- **Posty**: 5 postów/godzinę
+- **Komentarze**: 10 komentarzy/10 minut
+- **Upload**: 3 pliki/5 minut
+- **API**: 100 żądań/minutę
+
+### Ochrona przed atakami
+- XSS protection z DOMPurify
+- CSRF tokens dla operacji modyfikujących
+- Walidacja wszystkich inputów
+- Bezpieczne przechowywanie haseł (bcrypt)
+
+## 🌐 Deployment
+
+### Przygotowanie do deployment
+1. Upewnij się, że wszystkie zmienne środowiskowe są skonfigurowane
+2. Wykonaj build produkcyjny:
+```bash
+npm run build
+```
+3. Przetestuj build lokalnie:
+```bash
+npm run start
+```
+
+### Platformy deployment
+Aplikacja jest kompatybilna z:
+- **Vercel** - Zalecana platforma dla Next.js
+- **Netlify** - Alternatywa z dobrym CI/CD
+- **Railway** - Prosty deployment z bazą danych
+- **PlanetScale** - MySQL na skale
+- **Heroku** - Klasyczna opcja z add-onami
+
+### Konfiguracja zmiennych środowiskowych
+Przed deployment upewnij się, że wszystkie wymagane zmienne są ustawione na platformie docelowej.
+
+## 🤝 Rozwój
+
+### Uruchomienie w trybie development
+```bash
+npm run dev
+```
+
+### Linting i formatowanie
+```bash
+npm run lint
+npm run lint:fix
+```
+
+### Build produkcyjny
+```bash
+npm run build
+npm run start
+```
+
+## 📱 PWA Support
+
+Aplikacja obsługuje Progressive Web App:
+- Offline functionality
+- Install prompt
+- Service worker
+- Web app manifest
+
+## 🐛 Zgłaszanie Błędów
+
+1. Sprawdź [istniejące issues](https://github.com/tomrud88/mommy-blog/issues)
+2. Stwórz nowy issue z detalami:
+   - Opis problemu
+   - Kroki do reprodukcji
+   - Screenshots (jeśli dotyczy)
+   - Informacje o środowisku
+
+## 📄 Licencja
+
+MIT License - szczegóły w pliku `LICENSE`
+
+## 👥 Autor
+
+**Tomasz Rudny** - [GitHub](https://github.com/tomrud88)
+
+---
+
+## 🙏 Podziękowania
+
+- Next.js team za świetny framework
+- Społeczność open source za wsparcie
+- Wszystkim contributorom projektu
+
+---
+
+*Made with ❤️ for parents by parents* 
