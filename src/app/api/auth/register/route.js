@@ -1,9 +1,13 @@
 import { prisma } from "@/utils/connect";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
+import { applyRateLimit } from "@/utils/rateLimiter";
 
 export const POST = async (req) => {
   try {
+    // Apply rate limiting for registration (3 attempts per hour per IP)
+    await applyRateLimit(req, "register");
+
     const body = await req.json();
     const { name, email, password } = body;
 

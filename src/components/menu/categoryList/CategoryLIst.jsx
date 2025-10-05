@@ -3,6 +3,7 @@ import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { getApiUrl } from "@/utils/getBaseUrl";
+import Search from "../../search/Search";
 
 const getData = async () => {
   const res = await fetch(getApiUrl("/categories"), {
@@ -26,7 +27,12 @@ const CategoryLIst = async () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Kategorie</h1>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Kategorie</h1>
+        <div className={styles.searchWrapper}>
+          <Search />
+        </div>
+      </div>
       <div className={styles.categories}>
         {data.map((item) => (
           <Link

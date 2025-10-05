@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { IMAGE_SIZES, IMAGE_QUALITY } from "../utils/imageOptimization";
 import { getOptimizedImageUrl } from "../utils/cloudinaryOptimizer";
 
-const PostCard = ({ item, priority = false }) => {
+const PostCard = ({ item, priority = false, compact = false }) => {
   const { data: session } = useSession();
   const router = useRouter();
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -28,6 +28,53 @@ const PostCard = ({ item, priority = false }) => {
     }
     router.refresh();
   };
+
+  // Compact version for search results
+  if (compact) {
+    return (
+      <Link href={`/posts/${item.slug}`} className={styles.compactContainer}>
+        {item.img && (
+          <div className={styles.compactImageContainer}>
+            <Image
+              src={getOptimizedImageUrl(item.img, "thumbnail")}
+              alt={item.title || "Blog post image"}
+              fill
+              style={{ objectFit: "cover" }}
+              className={styles.compactImage}
+              sizes="80px"
+              quality={60}
+            />
+          </div>
+        )}
+        <div className={styles.compactTextContainer}>
+          <h4 className={styles.compactTitle}>{item.title}</h4>
+          {item.desc && (
+            <p
+              className={styles.compactDesc}
+              dangerouslySetInnerHTML={{
+                __html: item.highlightedDesc || item.desc,
+              }}
+            />
+          )}
+          <div className={styles.compactMeta}>
+            {item.category && (
+              <span className={styles.compactCategory}>
+                {item.category.title}
+              </span>
+            )}
+            {item.commentCount && item.commentCount > 0 && (
+              <span className={styles.compactComments}>
+                {item.commentCount} komentarzy
+              </span>
+            )}
+            <span className={styles.compactDate}>
+              {new Date(item.createdAt).toLocaleDateString("pl-PL")}
+            </span>
+          </div>
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <div className={styles.container}>

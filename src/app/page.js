@@ -28,7 +28,6 @@ export default async function Home({ searchParams }) {
           <h1 className={styles.categoryTitle}>{category.title}</h1>
         </div>
         <div className={styles.content}>
-          <div className={styles.blueDot}></div>
           <PostList page={page} cat={cat} />
           <Menu />
         </div>
@@ -41,7 +40,6 @@ export default async function Home({ searchParams }) {
       <TopSection />
       <CategoryLIst />
       <div className={styles.content}>
-        <div className={styles.blueDot}></div>
         <PostList page={page} cat={cat} />
         <Menu />
       </div>

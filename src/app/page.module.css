@@ -26,6 +26,7 @@
 .categoryTitle {
   margin: 0;
 }
+
 .content {
   display: flex;
   gap: 50px;
@@ -62,21 +63,5 @@
   .content {
     padding-left: 20px;
     padding-right: 20px;
-  }
-}
-
-.blueDot {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: 200px;
-  right: -50px;
-  background-color: blue;
-  border-radius: 50%;
-}
-
-@media screen and (max-width: 1580px) {
-  .blueDot {
-    display: none;
   }
 }

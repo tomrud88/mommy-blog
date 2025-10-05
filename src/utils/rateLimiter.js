@@ -133,6 +133,12 @@ export const RATE_LIMITS = {
     window: 15 * 60 * 1000, // per 15 minutes
   },
 
+  // Registration - very strict limits to prevent abuse
+  register: {
+    limit: 3, // 3 registrations
+    window: 60 * 60 * 1000, // per hour
+  },
+
   // Content creation - moderate limits
   posts: {
     limit: 5, // 5 posts
