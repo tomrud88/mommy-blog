@@ -37,19 +37,40 @@ const Footer = () => {
             inspiracje na ciekawe i twórcze spędzanie czasu z rodziną.
           </p>
           <div className={styles.icons}>
-            <Image
-              src="/communication.png"
-              alt="facebook"
-              width={18}
-              height={18}
-            />
-            <Image
-              src="/instagram.png"
-              alt="instagram"
-              width={18}
-              height={18}
-            />
-            <Image src="/tiktok.png" alt="tiktok" width={18} height={18} />
+            <a
+              href="https://facebook.com/mamazzwyobraznia"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook - Mama z Wyobraźnią"
+            >
+              <Image
+                src="/communication.png"
+                alt="Facebook"
+                width={18}
+                height={18}
+              />
+            </a>
+            <a
+              href="https://instagram.com/mamazzwyobraznia"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram - Mama z Wyobraźnią"
+            >
+              <Image
+                src="/instagram.png"
+                alt="Instagram"
+                width={18}
+                height={18}
+              />
+            </a>
+            <a
+              href="https://tiktok.com/@mamazzwyobraznia"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok - Mama z Wyobraźnią"
+            >
+              <Image src="/tiktok.png" alt="TikTok" width={18} height={18} />
+            </a>
           </div>
         </div>
         <div className={styles.links}>
@@ -68,9 +89,27 @@ const Footer = () => {
           </div>
           <div className={styles.list}>
             <span className={styles.listTitle}>Social</span>
-            <Link href="/">Facebook</Link>
-            <Link href="/">Instagram</Link>
-            <Link href="/">TikTok</Link>
+            <Link
+              href="https://facebook.com/mamazzwyobraznia"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </Link>
+            <Link
+              href="https://instagram.com/mamazzwyobraznia"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </Link>
+            <Link
+              href="https://tiktok.com/@mamazzwyobraznia"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              TikTok
+            </Link>
           </div>
         </div>
       </div>

@@ -47,6 +47,7 @@ const LoginPage = () => {
             });
           }}
         >
+          <h1 className={styles.title}>Zaloguj się</h1>
           <input
             name="email"
             type="email"
