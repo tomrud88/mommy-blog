@@ -13,23 +13,27 @@ Nowoczesny blog o macierzyństwie i rodzicielstwie zbudowany w Next.js 14. Platf
 ## ✨ Funkcjonalności
 
 ### 🔍 **Zaawansowane Wyszukiwanie**
+
 - Real-time search z debouncing (300ms)
 - Wyszukiwanie w tytułach i opisach postów
 - Kompaktowy widok wyników z miniaturkami
 - Podświetlanie wyszukanych fraz
 
 ### 📝 **Zarządzanie Treścią**
+
 - Tworzenie i edycja postów z edytorem Rich Text (React Quill)
 - System kategorii tematycznych
 - Upload i optymalizacja obrazów (Cloudinary)
 - Nawigacja między postami z miniaturkami
 
 ### 💬 **System Komentarzy**
+
 - Komentarze przypisane do użytkowników
 - Moderacja i zarządzanie komentarzami
 - Real-time aktualizacje
 
 ### 🔐 **Bezpieczeństwo**
+
 - NextAuth.js z wieloma providerami
 - Rate limiting na wszystkich API endpoints
 - Ochrona przed XSS (DOMPurify)
@@ -37,12 +41,14 @@ Nowoczesny blog o macierzyństwie i rodzicielstwie zbudowany w Next.js 14. Platf
 - Walidacja i sanityzacja danych
 
 ### ♿ **Dostępność (WCAG 2.1 Level AA)**
+
 - Skip links dla nawigacji klawiaturowej
 - Semantyczne HTML i ARIA labels
 - Wsparcie dla screen readerów
 - Responsive design dla wszystkich urządzeń
 
 ### 🎨 **Nowoczesny Design**
+
 - Glass-morphism i gradient efekty
 - Smooth animacje i transitions
 - Responsive design dla wszystkich urządzeń
@@ -51,22 +57,26 @@ Nowoczesny blog o macierzyństwie i rodzicielstwie zbudowany w Next.js 14. Platf
 ## 🛠️ Stack Technologiczny
 
 ### Frontend
+
 - **Next.js 14.2.15** - React framework z App Router
 - **React 18** - Biblioteka UI z Hooks
 - **CSS Modules** - Scoped styling
 - **React Quill** - Rich Text Editor
 
 ### Backend & Database
+
 - **Next.js API Routes** - Serverless API
 - **Prisma ORM** - Type-safe database client
 - **MongoDB** - NoSQL database
 - **NextAuth.js** - Authentication library
 
 ### Usługi Zewnętrzne
+
 - **Cloudinary** - Hosting i optymalizacja obrazów
 - **Upstash Redis** - Rate limiting (opcjonalnie)
 
 ### Bezpieczeństwo
+
 - **DOMPurify** - XSS protection
 - **bcryptjs** - Password hashing
 - **CSRF Tokens** - Cross-site request forgery protection
@@ -75,22 +85,26 @@ Nowoczesny blog o macierzyństwie i rodzicielstwie zbudowany w Next.js 14. Platf
 ## 🚀 Instalacja i Uruchomienie
 
 ### Wymagania
+
 - Node.js 22+ (wymagane dla Vercel deployment)
 - npm lub yarn
 - MongoDB (lokalnie lub MongoDB Atlas)
 
 ### 1. Klonowanie repozytorium
+
 ```bash
 git clone https://github.com/tomrud88/mommy-blog.git
 cd mommy-blog
 ```
 
 ### 2. Instalacja zależności
+
 ```bash
 npm install
 ```
 
 ### 3. Konfiguracja zmiennych środowiskowych
+
 Stwórz plik `.env.local` w głównym katalogu:
 
 ```env
@@ -116,12 +130,14 @@ UPSTASH_REDIS_REST_TOKEN="your-upstash-redis-token"
 ```
 
 ### 4. Inicjalizacja bazy danych
+
 ```bash
 npx prisma generate
 npx prisma db push
 ```
 
 ### 5. Uruchomienie aplikacji
+
 ```bash
 npm run dev
 ```
@@ -155,25 +171,30 @@ src/
 ## 🔧 API Endpoints
 
 ### Posts
+
 - `GET /api/posts` - Lista postów z paginacją
 - `POST /api/posts` - Tworzenie nowego postu (auth required)
 - `DELETE /api/posts` - Usuwanie postu (admin only)
 - `GET /api/posts/[slug]` - Pobieranie pojedynczego postu
 
 ### Search
+
 - `GET /api/search?q={query}` - Wyszukiwanie postów
 
 ### Comments
+
 - `GET /api/comments?postSlug={slug}` - Komentarze dla postu
 - `POST /api/comments` - Dodawanie komentarza (auth required)
 
 ### Authentication
+
 - `POST /api/auth/register` - Rejestracja użytkownika
 - NextAuth.js endpoints w `/api/auth/`
 
 ## 🔒 Bezpieczeństwo
 
 ### Rate Limiting
+
 - **Rejestracja**: 3 próby/godzinę na IP
 - **Posty**: 5 postów/godzinę
 - **Komentarze**: 10 komentarzy/10 minut
@@ -181,6 +202,7 @@ src/
 - **API**: 100 żądań/minutę
 
 ### Ochrona przed atakami
+
 - XSS protection z DOMPurify
 - CSRF tokens dla operacji modyfikujących
 - Walidacja wszystkich inputów
@@ -189,18 +211,21 @@ src/
 ## 🌐 Deployment
 
 ### ✅ Live na Vercel
+
 Aplikacja jest już wdrożona i dostępna pod adresem:
 **[https://mommy-blog.vercel.app](https://mommy-blog.vercel.app)**
 
 ### Konfiguracja dla Vercel
 
 1. **Node.js Version**
+
    ```json
    // .nvmrc
    22
    ```
 
 2. **Build Scripts** (package.json)
+
    ```json
    {
      "scripts": {
@@ -230,7 +255,7 @@ Aplikacja jest już wdrożona i dostępna pod adresem:
              "value": "nosniff"
            },
            {
-             "key": "X-Frame-Options", 
+             "key": "X-Frame-Options",
              "value": "DENY"
            }
          ]
@@ -242,23 +267,27 @@ Aplikacja jest już wdrożona i dostępna pod adresem:
 ### Deployment na własnej instancji Vercel
 
 1. **Fork repozytorium**
+
    ```bash
    git clone https://github.com/tomrud88/mommy-blog.git
    cd mommy-blog
    ```
 
 2. **Zainstaluj Vercel CLI**
+
    ```bash
    npm install -g vercel
    vercel login
    ```
 
 3. **Deploy aplikacji**
+
    ```bash
    vercel --prod
    ```
 
 4. **Skonfiguruj zmienne środowiskowe**
+
    ```bash
    vercel env add AUTH_GOOGLE_ID
    vercel env add AUTH_GOOGLE_SECRET
@@ -275,18 +304,24 @@ Aplikacja jest już wdrożona i dostępna pod adresem:
    - `https://your-domain.vercel.app/api/auth/callback/google`
 
 ### Przygotowanie do deployment lokalnie
+
 1. Upewnij się, że wszystkie zmienne środowiskowe są skonfigurowane
 2. Wykonaj build produkcyjny:
+
 ```bash
 npm run build
 ```
+
 3. Przetestuj build lokalnie:
+
 ```bash
 npm run start
 ```
 
 ### Inne platformy deployment
+
 Aplikacja jest kompatybilna z:
+
 - **Vercel** - ✅ Zalecana platforma (aktualnie wdrożona)
 - **Netlify** - Alternatywa z dobrym CI/CD
 - **Railway** - Prosty deployment z bazą danych
@@ -296,17 +331,20 @@ Aplikacja jest kompatybilna z:
 ## 🤝 Rozwój
 
 ### Uruchomienie w trybie development
+
 ```bash
 npm run dev
 ```
 
 ### Linting i formatowanie
+
 ```bash
 npm run lint
 npm run lint:fix
 ```
 
 ### Build produkcyjny
+
 ```bash
 npm run build
 npm run start
@@ -315,6 +353,7 @@ npm run start
 ## 📱 PWA Support
 
 Aplikacja obsługuje Progressive Web App:
+
 - Offline functionality
 - Install prompt
 - Service worker
@@ -347,4 +386,4 @@ MIT License - szczegóły w pliku `LICENSE`
 
 ---
 
-*Made with ❤️ for parents by parents* 
+_Made with ❤️ for parents by parents_

@@ -10,7 +10,11 @@ export const getBaseUrl = () => {
       return window.location.origin;
     }
     // Server-side: use NEXTAUTH_URL or VERCEL_URL
-    return process.env.NEXTAUTH_URL || process.env.VERCEL_URL || "https://mommy-blog-nlwrt969a-tomek198821wppls-projects.vercel.app";
+    return (
+      process.env.NEXTAUTH_URL ||
+      process.env.VERCEL_URL ||
+      "https://mommy-blog-nlwrt969a-tomek198821wppls-projects.vercel.app"
+    );
   }
 
   // In development, try to determine the current port
