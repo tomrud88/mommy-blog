@@ -3,9 +3,14 @@
  * This function will determine the correct URL based on the environment
  */
 export const getBaseUrl = () => {
-  // In production, use the NEXTAUTH_URL
+  // In production
   if (process.env.NODE_ENV === "production") {
-    return process.env.NEXTAUTH_URL || "http://localhost:3000";
+    if (typeof window !== "undefined") {
+      // Client-side: use the current window location
+      return window.location.origin;
+    }
+    // Server-side: use NEXTAUTH_URL or VERCEL_URL
+    return process.env.NEXTAUTH_URL || process.env.VERCEL_URL || "https://mommy-blog-nlwrt969a-tomek198821wppls-projects.vercel.app";
   }
 
   // In development, try to determine the current port

@@ -2,10 +2,13 @@
 
 Nowoczesny blog o macierzyństwie i rodzicielstwie zbudowany w Next.js 14. Platforma oferuje bezpieczne środowisko do dzielenia się doświadczeniami, poradami i wsparciem dla rodziców.
 
+🌐 **Live Demo:** [https://mommy-blog.vercel.app](https://mommy-blog.vercel.app)
+
 ![Next.js](https://img.shields.io/badge/Next.js-14.2.15-black?style=for-the-badge&logo=next.js)
 ![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb)
+![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge&logo=vercel)
 
 ## ✨ Funkcjonalności
 
@@ -72,7 +75,7 @@ Nowoczesny blog o macierzyństwie i rodzicielstwie zbudowany w Next.js 14. Platf
 ## 🚀 Instalacja i Uruchomienie
 
 ### Wymagania
-- Node.js 18+ 
+- Node.js 22+ (wymagane dla Vercel deployment)
 - npm lub yarn
 - MongoDB (lokalnie lub MongoDB Atlas)
 
@@ -185,7 +188,93 @@ src/
 
 ## 🌐 Deployment
 
-### Przygotowanie do deployment
+### ✅ Live na Vercel
+Aplikacja jest już wdrożona i dostępna pod adresem:
+**[https://mommy-blog.vercel.app](https://mommy-blog.vercel.app)**
+
+### Konfiguracja dla Vercel
+
+1. **Node.js Version**
+   ```json
+   // .nvmrc
+   22
+   ```
+
+2. **Build Scripts** (package.json)
+   ```json
+   {
+     "scripts": {
+       "build": "prisma generate && next build",
+       "postinstall": "prisma generate"
+     },
+     "engines": {
+       "node": ">=22.0.0"
+     }
+   }
+   ```
+
+3. **Vercel Configuration** (vercel.json)
+   ```json
+   {
+     "functions": {
+       "src/app/api/**/route.js": {
+         "maxDuration": 10
+       }
+     },
+     "headers": [
+       {
+         "source": "/(.*)",
+         "headers": [
+           {
+             "key": "X-Content-Type-Options",
+             "value": "nosniff"
+           },
+           {
+             "key": "X-Frame-Options", 
+             "value": "DENY"
+           }
+         ]
+       }
+     ]
+   }
+   ```
+
+### Deployment na własnej instancji Vercel
+
+1. **Fork repozytorium**
+   ```bash
+   git clone https://github.com/tomrud88/mommy-blog.git
+   cd mommy-blog
+   ```
+
+2. **Zainstaluj Vercel CLI**
+   ```bash
+   npm install -g vercel
+   vercel login
+   ```
+
+3. **Deploy aplikacji**
+   ```bash
+   vercel --prod
+   ```
+
+4. **Skonfiguruj zmienne środowiskowe**
+   ```bash
+   vercel env add AUTH_GOOGLE_ID
+   vercel env add AUTH_GOOGLE_SECRET
+   vercel env add AUTH_SECRET
+   vercel env add NEXTAUTH_SECRET
+   vercel env add DATABASE_URL
+   vercel env add CLOUDINARY_CLOUD_NAME
+   vercel env add CLOUDINARY_UPLOAD_PRESET
+   vercel env add NEXTAUTH_URL  # https://your-domain.vercel.app
+   ```
+
+5. **Konfiguracja Google OAuth**
+   - Dodaj domenę Vercel do Authorized redirect URIs:
+   - `https://your-domain.vercel.app/api/auth/callback/google`
+
+### Przygotowanie do deployment lokalnie
 1. Upewnij się, że wszystkie zmienne środowiskowe są skonfigurowane
 2. Wykonaj build produkcyjny:
 ```bash
@@ -196,16 +285,13 @@ npm run build
 npm run start
 ```
 
-### Platformy deployment
+### Inne platformy deployment
 Aplikacja jest kompatybilna z:
-- **Vercel** - Zalecana platforma dla Next.js
+- **Vercel** - ✅ Zalecana platforma (aktualnie wdrożona)
 - **Netlify** - Alternatywa z dobrym CI/CD
 - **Railway** - Prosty deployment z bazą danych
 - **PlanetScale** - MySQL na skale
 - **Heroku** - Klasyczna opcja z add-onami
-
-### Konfiguracja zmiennych środowiskowych
-Przed deployment upewnij się, że wszystkie wymagane zmienne są ustawione na platformie docelowej.
 
 ## 🤝 Rozwój
 
