@@ -11,7 +11,7 @@ const Search = dynamic(() => import("../search/Search"), {
       <span className={styles.searchText}>Kliknij aby wyszukać...</span>
     </div>
   ),
-  ssr: false
+  ssr: false,
 });
 
 const LazySearch = () => {
@@ -30,7 +30,7 @@ const LazySearch = () => {
       },
       {
         threshold: 0.1,
-        rootMargin: "50px"
+        rootMargin: "50px",
       }
     );
 
