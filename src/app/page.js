@@ -4,22 +4,12 @@ import PostList from "@/postList/PostList";
 import TopSection from "@/topSection/TopSection";
 import Menu from "@/components/menu/Menu";
 import CategoryLIst from "@/components/menu/categoryList/CategoryLIst";
-
-const getCategory = async (cat) => {
-  if (!cat) return null;
-  const { getApiUrl } = await import("@/utils/getBaseUrl");
-  const res = await fetch(getApiUrl("/categories"), {
-    next: { revalidate: 3600 },
-  });
-  if (!res.ok) return null;
-  const categories = await res.json();
-  return categories.find((c) => c.slug === cat);
-};
+import { getCategoryBySlug } from "@/utils/categories";
 
 export default async function Home({ searchParams }) {
   const page = parseInt(searchParams.page) || 1;
   const cat = searchParams.cat;
-  const category = await getCategory(cat);
+  const category = getCategoryBySlug(cat);
 
   if (category) {
     return (

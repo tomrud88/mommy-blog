@@ -1,28 +1,9 @@
 import Link from "next/link";
 import styles from "./menuCategories.module.css";
-import { getApiUrl } from "@/utils/getBaseUrl";
-
-const slugColorMap = {
-  mama: "rgb(65, 65, 245)",
-  dziecko: "rgb(223, 115, 196)",
-  zabawy: "rgb(245, 161, 65)",
-  książki: "rgb(67, 185, 13)",
-};
+import { getAllCategories, CATEGORY_COLORS } from "@/utils/categories";
 
 const MenuCategories = async () => {
-  const res = await fetch(getApiUrl("/categories"), {
-    next: { revalidate: 3600 },
-  });
-
-  if (!res.ok) {
-    return <p className={styles.error}>Nie udało się załadować kategorii.</p>;
-  }
-
-  const data = await res.json();
-
-  if (!Array.isArray(data) || data.length === 0) {
-    return <p className={styles.error}>Brak dostępnych kategorii.</p>;
-  }
+  const data = getAllCategories();
 
   return (
     <div className={styles.categoryList}>
@@ -31,7 +12,7 @@ const MenuCategories = async () => {
           key={item.id}
           href={`/?cat=${item.slug}`}
           className={styles.categoryItem}
-          style={{ backgroundColor: slugColorMap[item.slug] || "#6b7280" }}
+          style={{ backgroundColor: CATEGORY_COLORS[item.slug] || "#6b7280" }}
         >
           {item.title}
         </Link>

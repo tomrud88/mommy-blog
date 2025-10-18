@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./menu.module.css";
 import MenuCategories from "./menuCategories/MenuCategories";
 import { getApiUrl } from "@/utils/getBaseUrl";
+import { getCategoryStyleMap } from "@/utils/categories";
 
 const Menu = async () => {
   let popularPosts = [];
@@ -38,13 +39,7 @@ const Menu = async () => {
 
   console.log("Popular posts count:", popularPosts?.length || 0);
 
-  // Mapping for CSS class names
-  const categoryStyleMap = {
-    mama: styles.mommy,
-    dziecko: styles.child,
-    zabawy: styles.play,
-    książki: styles.books,
-  };
+  const categoryStyleMap = getCategoryStyleMap(styles);
 
   return (
     <div className={styles.container}>

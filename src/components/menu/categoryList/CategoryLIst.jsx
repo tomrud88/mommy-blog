@@ -2,28 +2,11 @@ import React from "react";
 import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import { getApiUrl } from "@/utils/getBaseUrl";
 import Search from "../../search/Search";
-
-const getData = async () => {
-  const res = await fetch(getApiUrl("/categories"), {
-    next: { revalidate: 3600 },
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed");
-  }
-
-  return res.json();
-};
+import { getAllCategories } from "@/utils/categories";
 
 const CategoryLIst = async () => {
-  const data = await getData();
-
-  if (!Array.isArray(data)) {
-    console.error("Expected an array but got:", data);
-    return <p>Failed to load categories</p>;
-  }
+  const data = getAllCategories();
 
   return (
     <div className={styles.container}>
