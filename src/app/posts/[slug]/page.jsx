@@ -1,10 +1,10 @@
 import Image from "next/image";
 import styles from "./singlePage.module.css";
 import Menu from "@/components/menu/Menu";
-import Comments from "@/components/menu/comments/Comments";
 import ViewTracker from "@/components/ViewTracker";
 import HeroImage from "@/components/HeroImage/HeroImage";
 import PostNavigation from "@/components/PostNavigation/PostNavigation";
+import LazyComments from "@/components/LazyComments/LazyComments";
 import { getApiUrl } from "@/utils/getBaseUrl";
 import { sanitizeBlogContent } from "@/utils/htmlSanitizer";
 
@@ -96,7 +96,7 @@ const SinglePage = async ({ params }) => {
               previousPost={navigation?.previous}
               nextPost={navigation?.next}
             />
-            <Comments postSlug={slug} />
+            <LazyComments postSlug={slug} />
           </div>
           <Menu />
         </div>

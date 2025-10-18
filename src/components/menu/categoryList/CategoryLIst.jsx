@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import Search from "../../search/Search";
+import LazySearch from "../../LazySearch/LazySearch";
 import { getAllCategories } from "@/utils/categories";
 
 const CategoryLIst = async () => {
@@ -13,7 +13,7 @@ const CategoryLIst = async () => {
       <div className={styles.header}>
         <h1 className={styles.title}>Kategorie</h1>
         <div className={styles.searchWrapper}>
-          <Search />
+          <LazySearch />
         </div>
       </div>
       <div className={styles.categories}>
