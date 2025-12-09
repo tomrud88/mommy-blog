@@ -55,10 +55,10 @@ const Menu = async () => {
               <div className={styles.textContainer}>
                 <span
                   className={`${styles.category} ${
-                    categoryStyleMap[post.cat.slug] || styles.mommy
+                    categoryStyleMap[post.cat?.slug] || styles.mommy
                   }`}
                 >
-                  {post.cat.title}
+                  {post.cat?.title || "Mama"}
                 </span>
                 <h3 className={styles.postTitle}>{post.title}</h3>
                 <div className={styles.detail}>

@@ -17,11 +17,12 @@ export const GET = async (req) => {
       },
     });
 
-    return new NextResponse(JSON.stringify(comments, { status: 200 }));
+    return new NextResponse(JSON.stringify(comments), { status: 200 });
   } catch (err) {
     console.log(err);
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+      JSON.stringify({ message: "Something went wrong!" }),
+      { status: 500 }
     );
   }
 };
@@ -77,11 +78,12 @@ export const POST = async (req) => {
     });
     console.log("Comment created:", comment);
 
-    return new NextResponse(JSON.stringify(comment, { status: 200 }));
+    return new NextResponse(JSON.stringify(comment), { status: 200 });
   } catch (err) {
     console.log(err);
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+      JSON.stringify({ message: "Something went wrong!" }),
+      { status: 500 }
     );
   }
 };
@@ -137,7 +139,8 @@ export const DELETE = async (req) => {
   } catch (err) {
     console.log(err);
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+      JSON.stringify({ message: "Something went wrong!" }),
+      { status: 500 }
     );
   }
 };

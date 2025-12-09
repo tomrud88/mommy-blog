@@ -7,13 +7,30 @@ export const GET = async (req, { params }) => {
   try {
     const post = await prisma.post.findUnique({
       where: { slug: postSlug },
+      include: {
+        cat: true,
+        user: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
+      },
     });
 
-    return new NextResponse(JSON.stringify(post, { status: 200 }));
+    if (!post) {
+      return new NextResponse(
+        JSON.stringify({ message: "Post not found" }),
+        { status: 404 }
+      );
+    }
+
+    return new NextResponse(JSON.stringify(post), { status: 200 });
   } catch (err) {
     console.log(err);
     return new NextResponse(
-      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+      JSON.stringify({ message: "Something went wrong!" }),
+      { status: 500 }
     );
   }
 };
