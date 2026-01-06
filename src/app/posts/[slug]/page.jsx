@@ -10,12 +10,18 @@ import { getApiUrl } from "@/utils/getBaseUrl";
 
 const getData = async (slug) => {
   try {
-    const res = await fetch(getApiUrl(`/posts/${slug}`), {
+    const apiUrl = getApiUrl(`/posts/${slug}`);
+    console.log(`[SinglePage] Fetching post data for slug: ${slug}`);
+    console.log(`[SinglePage] API URL: ${apiUrl}`);
+    
+    const res = await fetch(apiUrl, {
       next: {
         revalidate: 60,
         tags: ["posts", `post-${slug}`],
       },
     });
+
+    console.log(`[SinglePage] Fetch response status: ${res.status}`);
 
     if (!res.ok) {
       if (res.status === 404) {
@@ -25,9 +31,10 @@ const getData = async (slug) => {
     }
 
     const data = await res.json();
+    console.log(`[SinglePage] Post data received, title: ${data?.title}`);
     return data;
   } catch (error) {
-    console.error("Error fetching post:", error);
+    console.error("[SinglePage] Error fetching post:", error);
     throw error;
   }
 };
