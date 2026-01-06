@@ -9,12 +9,6 @@ export const GET = async (req, { params }) => {
       where: { slug: postSlug },
       include: {
         cat: true,
-        user: {
-          select: {
-            name: true,
-            image: true,
-          },
-        },
       },
     });
 
