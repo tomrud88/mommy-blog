@@ -5,8 +5,8 @@ import ViewTracker from "@/components/ViewTracker";
 import HeroImage from "@/components/HeroImage/HeroImage";
 import PostNavigation from "@/components/PostNavigation/PostNavigation";
 import LazyComments from "@/components/LazyComments/LazyComments";
+import PostContent from "@/components/PostContent";
 import { getApiUrl } from "@/utils/getBaseUrl";
-import { sanitizeBlogContent } from "@/utils/htmlSanitizer";
 
 const getData = async (slug) => {
   try {
@@ -86,12 +86,7 @@ const SinglePage = async ({ params }) => {
         </div>
         <div className={styles.contentSingle}>
           <div className={styles.post}>
-            <div
-              className={styles.description}
-              dangerouslySetInnerHTML={{
-                __html: sanitizeBlogContent(data?.desc || ""),
-              }}
-            />
+            <PostContent content={data?.desc} />
             <PostNavigation
               previousPost={navigation?.previous}
               nextPost={navigation?.next}
