@@ -1,11 +1,10 @@
 "use client";
 import { sanitizeBlogContent } from "@/utils/htmlSanitizer";
-import styles from "../posts/[slug]/singlePage.module.css";
 
-const PostContent = ({ content }) => {
+const PostContent = ({ content, className }) => {
   return (
     <div
-      className={styles.description}
+      className={className}
       dangerouslySetInnerHTML={{
         __html: sanitizeBlogContent(content || ""),
       }}

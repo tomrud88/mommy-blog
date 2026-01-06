@@ -86,7 +86,7 @@ const SinglePage = async ({ params }) => {
         </div>
         <div className={styles.contentSingle}>
           <div className={styles.post}>
-            <PostContent content={data?.desc} />
+            <PostContent content={data?.desc} className={styles.description} />
             <PostNavigation
               previousPost={navigation?.previous}
               nextPost={navigation?.next}
